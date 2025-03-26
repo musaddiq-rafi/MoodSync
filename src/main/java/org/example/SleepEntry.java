@@ -1,19 +1,22 @@
 package org.example;
 
-public class SleepEntry extends LogEntry{
+public class SleepEntry extends LogEntry {
     private int hours;
-    private String sleepDescription;
+    private SleepQualities sleepQuality;
 
-    public int getHours(){
+    public int getHours() {
         return hours;
     }
-    public void setHours(int hours){
+
+    public void setHours(int hours) {
         this.hours = hours;
     }
-    public String getSleepDescription(){
-        return sleepDescription;
+
+    public SleepQualities getSleepQuality() {
+        return sleepQuality;
     }
-    public void setSleepDescription(String sleepDescription){
-        this.sleepDescription = sleepDescription;
+
+    public void setSleepQuality(SleepQualities sleepQuality) {
+        this.sleepQuality = sleepQuality;
     }
 }

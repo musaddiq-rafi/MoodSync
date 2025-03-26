@@ -43,16 +43,49 @@ public class Main {
         String password = scanner.nextLine();
         if (authenticator.login(username, password)) {
             System.out.println("Login successful!");
-            displayInnerMenu(scanner, moodTracker);
+            inputDate(scanner, moodTracker);
         } else {
             System.out.println("Invalid username or password.");
         }
     }
 
-    private static void displayInnerMenu(Scanner scanner, MoodTracker moodTracker) {
+    private static void inputDate(Scanner scanner, MoodTracker moodTracker) {
+        System.out.print("Enter date (YYYY-MM-DD): ");
+        String date = scanner.nextLine();
+        DailyMood dailyMood = new DailyMood(date);
+
+        System.out.println("How are you feeling today?");
+        System.out.println("1. " + MoodLevel.EXTREMELY_HAPPY.getDescription());
+        System.out.println("2. " + MoodLevel.HAPPY.getDescription());
+        System.out.println("3. " + MoodLevel.NEUTRAL.getDescription());
+        System.out.println("4. " + MoodLevel.SAD.getDescription());
+        System.out.println("5. " + MoodLevel.EXTREMELY_SAD.getDescription());
+
+        int moodChoice = scanner.nextInt();
+        scanner.nextLine(); // Consume newline
+
+        MoodLevel moodLevel = switch (moodChoice) {
+            case 1 -> MoodLevel.EXTREMELY_HAPPY;
+            case 2 -> MoodLevel.HAPPY;
+            case 3 -> MoodLevel.NEUTRAL;
+            case 4 -> MoodLevel.SAD;
+            case 5 -> MoodLevel.EXTREMELY_SAD;
+            default -> {
+                System.out.println("Invalid choice. Defaulting to NEUTRAL.");
+                yield MoodLevel.NEUTRAL;
+            }
+        };
+
+        dailyMood.setMood(moodLevel);
+        displayInnerMenu(scanner, moodTracker, dailyMood);
+    }
+
+    private static void displayInnerMenu(Scanner scanner, MoodTracker moodTracker, DailyMood dailyMood) {
         boolean exit = false;
+        boolean sleepEntryDone = false;
+
         while (!exit) {
-            System.out.println("1. Add Sleep Entry");
+            System.out.println("1. Add Sleep Entry" + (sleepEntryDone ? " ✔" : ""));
             System.out.println("2. Add Productivity Entry");
             System.out.println("3. Add Weather Entry");
             System.out.println("4. Add Exercise Entry");
@@ -68,64 +101,47 @@ public class Main {
 
             switch (menuChoice) {
                 case 1:
-                    System.out.print("Enter hours of sleep: ");
-                    int hours = scanner.nextInt();
-                    SleepEntry sleepEntry = new SleepEntry();
-                    sleepEntry.setHours(hours);
-                    moodTracker.addEntry(sleepEntry);
+                    if (!sleepEntryDone) {
+                        System.out.print("Enter hours of sleep: ");
+                        int hours = scanner.nextInt();
+                        scanner.nextLine(); // Consume newline
+
+                        System.out.println("Select sleep quality:");
+                        System.out.println("1. " + SleepQualities.EXCELLENT.getDescription());
+                        System.out.println("2. " + SleepQualities.GOOD.getDescription());
+                        System.out.println("3. " + SleepQualities.AVERAGE.getDescription());
+                        System.out.println("4. " + SleepQualities.POOR.getDescription());
+                        System.out.println("5. " + SleepQualities.TERRIBLE.getDescription());
+
+                        int qualityChoice = scanner.nextInt();
+                        scanner.nextLine(); // Consume newline
+
+                        SleepQualities sleepQuality = switch (qualityChoice) {
+                            case 1 -> SleepQualities.EXCELLENT;
+                            case 2 -> SleepQualities.GOOD;
+                            case 3 -> SleepQualities.AVERAGE;
+                            case 4 -> SleepQualities.POOR;
+                            case 5 -> SleepQualities.TERRIBLE;
+                            default -> {
+                                System.out.println("Invalid choice. Defaulting to AVERAGE.");
+                                yield SleepQualities.AVERAGE;
+                            }
+                        };
+
+                        SleepEntry sleepEntry = new SleepEntry();
+                        sleepEntry.setHours(hours);
+                        sleepEntry.setSleepQuality(sleepQuality);
+                        dailyMood.addEntry(sleepEntry);
+                        sleepEntryDone = true;
+                    } else {
+                        System.out.println("Sleep entry already added.");
+                    }
                     break;
-//                case 2:
-//                    System.out.print("Enter tasks completed: ");
-//                    int tasksCompleted = scanner.nextInt();
-//                    ProductivityEntry productivityEntry = new ProductivityEntry();
-//                    productivityEntry.setTasksCompleted(tasksCompleted);
-//                    moodTracker.addEntry(productivityEntry);
+                // Other cases...
+//                case 10:
+//                    moodTracker.addDailyMood(dailyMood);
+//                    exit = true;
 //                    break;
-//                case 3:
-//                    System.out.print("Enter weather condition (DULL, GLOOMY, SUNNY, RAINY, CLOUDY, WINDY, SNOWY): ");
-//                    String weatherCondition = scanner.nextLine();
-//                    WeatherEntry weatherEntry = new WeatherEntry();
-//                    weatherEntry.setWeatherCondition(WeatherCondition.valueOf(weatherCondition.toUpperCase()));
-//                    moodTracker.addEntry(weatherEntry);
-//                    break;
-//                case 4:
-//                    System.out.print("Enter minutes of exercise: ");
-//                    int minutes = scanner.nextInt();
-//                    ExerciseEntry exerciseEntry = new ExerciseEntry();
-//                    exerciseEntry.setMinutes(minutes);
-//                    moodTracker.addEntry(exerciseEntry);
-//                    break;
-//                case 5:
-//                    System.out.print("Enter food type: ");
-//                    String foodType = scanner.nextLine();
-//                    FoodEntry foodEntry = new FoodEntry();
-//                    foodEntry.setFoodType(foodType);
-//                    moodTracker.addEntry(foodEntry);
-//                    break;
-//                case 6:
-//                    System.out.print("Enter screen time in minutes: ");
-//                    int screenTimeMinutes = scanner.nextInt();
-//                    ScreenTimeEntry screenTimeEntry = new ScreenTimeEntry();
-//                    screenTimeEntry.setMinutes(screenTimeMinutes);
-//                    moodTracker.addEntry(screenTimeEntry);
-//                    break;
-//                case 7:
-//                    System.out.print("Enter mood level (HAPPY, NEUTRAL, SAD, EXTREMELY_HAPPY): ");
-//                    String moodLevel = scanner.nextLine();
-//                    MoodEntry moodEntry = new MoodEntry();
-//                    moodEntry.setMoodLevel(MoodLevel.valueOf(moodLevel.toUpperCase()));
-//                    moodTracker.addEntry(moodEntry);
-//                    break;
-//                case 8:
-//                    moodTracker.analyzeMood();
-//                    break;
-//                case 9:
-//                    Graph graph = new Graph();
-//                    graph.displayGraph();
-//                    break;
-                case 10:
-                    exit = true;
-                    break;
                 default:
                     System.out.println("Invalid choice.");
             }
