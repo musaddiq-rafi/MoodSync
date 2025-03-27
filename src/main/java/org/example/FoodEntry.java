@@ -1,31 +1,34 @@
 package org.example;
 
-public class FoodEntry {
-    private String healthyFoodName;
-    private String otherFoodName;
-    private int foodHabitRating;
+public class FoodEntry extends LogEntry {
+    private FoodSatisfactionLevel foodSatisfactionLevel;
+    private String foodDescription;
 
-    public String getHealthyFoodName(){
-        return healthyFoodName;
+    public FoodSatisfactionLevel getFoodSatisfactionLevel() {
+        return foodSatisfactionLevel;
     }
 
-    public void setHealthyFoodName(String healthyFoodName) {
-        this.healthyFoodName = healthyFoodName;
+    public void setFoodSatisfactionLevel(FoodSatisfactionLevel foodSatisfactionLevel) {
+        this.foodSatisfactionLevel = foodSatisfactionLevel;
     }
 
-    public String getOtherFoodName() {
-        return otherFoodName;
+    public String getFoodDescription() {
+        return foodDescription;
     }
 
-    public void setOtherFoodName(String otherFoodName) {
-        this.otherFoodName = otherFoodName;
+    public void setFoodDescription(String foodDescription) {
+        this.foodDescription = foodDescription;
     }
 
-    public int getFoodHabitRating() {
-        return foodHabitRating;
+    public String toCSV() {
+        return foodSatisfactionLevel + "," + foodDescription;
     }
 
-    public void setFoodHabitRating(int foodHabitRating) {
-        this.foodHabitRating = foodHabitRating;
+    public static FoodEntry fromCSV(String csv) {
+        String[] parts = csv.split(",");
+        FoodEntry entry = new FoodEntry();
+        entry.setFoodSatisfactionLevel(FoodSatisfactionLevel.valueOf(parts[0]));
+        entry.setFoodDescription(parts[1]);
+        return entry;
     }
 }

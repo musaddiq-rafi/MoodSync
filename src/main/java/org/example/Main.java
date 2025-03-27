@@ -89,12 +89,14 @@ public class Main {
         boolean exit = false;
         boolean sleepEntryDone = false;
         boolean productivityEntryDone = false;
+        boolean weatherEntryDone = false;
+        boolean exerciseEntryDone = false;
 
         while (!exit) {
             System.out.println("1. Add Sleep Entry" + (sleepEntryDone ? " ✔" : ""));
-            System.out.println("2. Add Productivity Entry"+(productivityEntryDone ? " ✔" : ""));
-            System.out.println("3. Add Weather Entry");
-            System.out.println("4. Add Exercise Entry");
+            System.out.println("2. Add Productivity Entry" + (productivityEntryDone ? " ✔" : ""));
+            System.out.println("3. Add Weather Entry" + (weatherEntryDone ? " ✔" : ""));
+            System.out.println("4. Add Exercise Entry" + (exerciseEntryDone ? " ✔" : ""));
             System.out.println("5. Add Food Entry");
             System.out.println("6. Add Screen Time Entry");
             System.out.println("7. Add Mood Entry");
@@ -149,43 +151,149 @@ public class Main {
                     }
                     break;
                 case 2:
-                    System.out.println("Select productivity level:");
-                    System.out.println("1. " + ProductivityLevel.EXTREMELY_PRODUCTIVE.getDescription());
-                    System.out.println("2. " + ProductivityLevel.PRODUCTIVE.getDescription());
-                    System.out.println("3. " + ProductivityLevel.NEUTRAL.getDescription());
-                    System.out.println("4. " + ProductivityLevel.UNPRODUCTIVE.getDescription());
-                    System.out.println("5. " + ProductivityLevel.EXTREMELY_UNPRODUCTIVE.getDescription());
+                    if (!productivityEntryDone) {
+                        System.out.println("Select productivity level:");
+                        System.out.println("1. " + ProductivityLevel.EXTREMELY_PRODUCTIVE.getDescription());
+                        System.out.println("2. " + ProductivityLevel.PRODUCTIVE.getDescription());
+                        System.out.println("3. " + ProductivityLevel.NEUTRAL.getDescription());
+                        System.out.println("4. " + ProductivityLevel.UNPRODUCTIVE.getDescription());
+                        System.out.println("5. " + ProductivityLevel.EXTREMELY_UNPRODUCTIVE.getDescription());
 
-                    int productivityChoice = scanner.nextInt();
+                        int productivityChoice = scanner.nextInt();
+                        scanner.nextLine(); // Consume newline
+
+                        ProductivityLevel productivityLevel = switch (productivityChoice) {
+                            case 1 -> ProductivityLevel.EXTREMELY_PRODUCTIVE;
+                            case 2 -> ProductivityLevel.PRODUCTIVE;
+                            case 3 -> ProductivityLevel.NEUTRAL;
+                            case 4 -> ProductivityLevel.UNPRODUCTIVE;
+                            case 5 -> ProductivityLevel.EXTREMELY_UNPRODUCTIVE;
+                            default -> {
+                                System.out.println("Invalid choice. Defaulting to NEUTRAL.");
+                                yield ProductivityLevel.NEUTRAL;
+                            }
+                        };
+
+                        System.out.print("Enter what productive tasks you have done today: ");
+                        String productivityDescription = scanner.nextLine();
+
+                        ProductivityEntry productivityEntry = new ProductivityEntry();
+                        productivityEntry.setProductivityLevel(productivityLevel);
+                        productivityEntry.setProductivityDescription(productivityDescription);
+                        productivityEntryDone = true;
+                        dailyMood.addEntry(productivityEntry);
+                    } else {
+                        System.out.println("Productivity entry already added.");
+                    }
+                    break;
+                case 3:
+                    if (!weatherEntryDone) {
+                        System.out.println("Select weather level:");
+                        System.out.println("1. " + WeatherLevel.SUNNY.getDescription());
+                        System.out.println("2. " + WeatherLevel.CLOUDY.getDescription());
+                        System.out.println("3. " + WeatherLevel.RAINY.getDescription());
+                        System.out.println("4. " + WeatherLevel.STORMY.getDescription());
+                        System.out.println("5. " + WeatherLevel.SNOWY.getDescription());
+
+                        int weatherChoice = scanner.nextInt();
+                        scanner.nextLine(); // Consume newline
+
+                        WeatherLevel weatherLevel = switch (weatherChoice) {
+                            case 1 -> WeatherLevel.SUNNY;
+                            case 2 -> WeatherLevel.CLOUDY;
+                            case 3 -> WeatherLevel.RAINY;
+                            case 4 -> WeatherLevel.STORMY;
+                            case 5 -> WeatherLevel.SNOWY;
+                            default -> {
+                                System.out.println("Invalid choice. Defaulting to SUNNY.");
+                                yield WeatherLevel.SUNNY;
+                            }
+                        };
+
+                        System.out.print("Enter weather description: ");
+                        String weatherDescription = scanner.nextLine();
+
+                        WeatherEntry weatherEntry = new WeatherEntry();
+                        weatherEntry.setWeatherLevel(weatherLevel);
+                        weatherEntry.setWeatherDescription(weatherDescription);
+                        weatherEntryDone = true;
+                        dailyMood.addEntry(weatherEntry);
+                    } else {
+                        System.out.println("Weather entry already added.");
+                    }
+                    break;
+                case 4:
+                    if (!exerciseEntryDone) {
+                        System.out.println("Select exercise level:");
+                        System.out.println("1. " + ExerciseLevel.NONE.getDescription());
+                        System.out.println("2. " + ExerciseLevel.LIGHT.getDescription());
+                        System.out.println("3. " + ExerciseLevel.MODERATE.getDescription());
+                        System.out.println("4. " + ExerciseLevel.INTENSE.getDescription());
+                        System.out.println("5. " + ExerciseLevel.EXTREME.getDescription());
+
+                        int exerciseChoice = scanner.nextInt();
+                        scanner.nextLine(); // Consume newline
+
+                        ExerciseLevel exerciseLevel = switch (exerciseChoice) {
+                            case 1 -> ExerciseLevel.NONE;
+                            case 2 -> ExerciseLevel.LIGHT;
+                            case 3 -> ExerciseLevel.MODERATE;
+                            case 4 -> ExerciseLevel.INTENSE;
+                            case 5 -> ExerciseLevel.EXTREME;
+                            default -> {
+                                System.out.println("Invalid choice. Defaulting to NONE.");
+                                yield ExerciseLevel.NONE;
+                            }
+                        };
+
+                        System.out.print("Enter exercise description: ");
+                        String exerciseDescription = scanner.nextLine();
+
+                        ExerciseEntry exerciseEntry = new ExerciseEntry();
+                        exerciseEntry.setExerciseLevel(exerciseLevel);
+                        exerciseEntry.setExerciseDescription(exerciseDescription);
+                        exerciseEntryDone = true;
+                        dailyMood.addEntry(exerciseEntry);
+                    } else {
+                        System.out.println("Exercise entry already added.");
+                    }
+                    break;
+                case 5:
+                    System.out.println("Select food satisfaction level:");
+                    System.out.println("1. " + FoodSatisfactionLevel.EXCELLENT.getDescription());
+                    System.out.println("2. " + FoodSatisfactionLevel.GOOD.getDescription());
+                    System.out.println("3. " + FoodSatisfactionLevel.AVERAGE.getDescription());
+                    System.out.println("4. " + FoodSatisfactionLevel.POOR.getDescription());
+                    System.out.println("5. " + FoodSatisfactionLevel.TERRIBLE.getDescription());
+
+                    int foodChoice = scanner.nextInt();
                     scanner.nextLine(); // Consume newline
 
-                    ProductivityLevel productivityLevel = switch (productivityChoice) {
-                        case 1 -> ProductivityLevel.EXTREMELY_PRODUCTIVE;
-                        case 2 -> ProductivityLevel.PRODUCTIVE;
-                        case 3 -> ProductivityLevel.NEUTRAL;
-                        case 4 -> ProductivityLevel.UNPRODUCTIVE;
-                        case 5 -> ProductivityLevel.EXTREMELY_UNPRODUCTIVE;
+                    FoodSatisfactionLevel foodSatisfactionLevel = switch (foodChoice) {
+                        case 1 -> FoodSatisfactionLevel.EXCELLENT;
+                        case 2 -> FoodSatisfactionLevel.GOOD;
+                        case 3 -> FoodSatisfactionLevel.AVERAGE;
+                        case 4 -> FoodSatisfactionLevel.POOR;
+                        case 5 -> FoodSatisfactionLevel.TERRIBLE;
                         default -> {
-                            System.out.println("Invalid choice. Defaulting to NEUTRAL.");
-                            yield ProductivityLevel.NEUTRAL;
+                            System.out.println("Invalid choice. Defaulting to AVERAGE.");
+                            yield FoodSatisfactionLevel.AVERAGE;
                         }
                     };
 
-                    System.out.print("Enter what productive tasks you have done today: ");
-                    String productivityDescription = scanner.nextLine();
+                    System.out.print("Enter food description: ");
+                    String foodDescription = scanner.nextLine();
 
-                    ProductivityEntry productivityEntry = new ProductivityEntry();
-                    productivityEntry.setProductivityLevel(productivityLevel);
-                    productivityEntry.setProductivityDescription(productivityDescription);
-                    productivityEntryDone = true;
-                    dailyMood.addEntry(productivityEntry);
+                    FoodEntry foodEntry = new FoodEntry();
+                    foodEntry.setFoodSatisfactionLevel(foodSatisfactionLevel);
+                    foodEntry.setFoodDescription(foodDescription);
+                    dailyMood.addEntry(foodEntry);
                     break;
                 // Other cases...
                 case 10:
                     showSavedData();
                     break;
                 case 11:
-                   // moodTracker.addDailyMood(dailyMood);
                     try {
                         saveDailyMoodToFile(dailyMood, "daily_mood_data.csv");
                     } catch (IOException e) {
@@ -207,6 +315,12 @@ public class Main {
                     writer.write("SleepEntry," + ((SleepEntry) entry).toCSV() + "\n");
                 } else if (entry instanceof ProductivityEntry) {
                     writer.write("ProductivityEntry," + ((ProductivityEntry) entry).toCSV() + "\n");
+                } else if (entry instanceof WeatherEntry) {
+                    writer.write("WeatherEntry," + ((WeatherEntry) entry).toCSV() + "\n");
+                } else if (entry instanceof ExerciseEntry) {
+                    writer.write("ExerciseEntry," + ((ExerciseEntry) entry).toCSV() + "\n");
+                } else if (entry instanceof FoodEntry) {
+                    writer.write("FoodEntry," + ((FoodEntry) entry).toCSV() + "\n");
                 }
                 // Add other entry types here...
             }
