@@ -21,11 +21,11 @@ public class ProductivityEntry extends LogEntry {
     }
 
     public String toCSV() {
-        return productivityLevel + "," + productivityDescription;
+        return productivityLevel + ";" + productivityDescription;
     }
 
     public static ProductivityEntry fromCSV(String csv) {
-        String[] parts = csv.split(",");
+        String[] parts = csv.split(";");
         ProductivityEntry entry = new ProductivityEntry();
         entry.setProductivityLevel(ProductivityLevel.valueOf(parts[0]));
         entry.setProductivityDescription(parts[1]);

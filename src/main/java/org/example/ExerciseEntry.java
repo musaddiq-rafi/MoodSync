@@ -21,11 +21,11 @@ public class ExerciseEntry extends LogEntry {
     }
 
     public String toCSV() {
-        return exerciseLevel + "," + exerciseDescription;
+        return exerciseLevel + ";" + exerciseDescription;
     }
 
     public static ExerciseEntry fromCSV(String csv) {
-        String[] parts = csv.split(",");
+        String[] parts = csv.split(";");
         ExerciseEntry entry = new ExerciseEntry();
         entry.setExerciseLevel(ExerciseLevel.valueOf(parts[0]));
         entry.setExerciseDescription(parts[1]);

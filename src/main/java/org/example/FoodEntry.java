@@ -21,11 +21,11 @@ public class FoodEntry extends LogEntry {
     }
 
     public String toCSV() {
-        return foodSatisfactionLevel + "," + foodDescription;
+        return foodSatisfactionLevel + ";" + foodDescription;
     }
 
     public static FoodEntry fromCSV(String csv) {
-        String[] parts = csv.split(",");
+        String[] parts = csv.split(";");
         FoodEntry entry = new FoodEntry();
         entry.setFoodSatisfactionLevel(FoodSatisfactionLevel.valueOf(parts[0]));
         entry.setFoodDescription(parts[1]);

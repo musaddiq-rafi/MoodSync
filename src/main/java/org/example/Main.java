@@ -91,18 +91,20 @@ public class Main {
         boolean productivityEntryDone = false;
         boolean weatherEntryDone = false;
         boolean exerciseEntryDone = false;
+        boolean screenTimeEntryDone = false;
+        boolean foodEntryDone = false;
 
         while (!exit) {
             System.out.println("1. Add Sleep Entry" + (sleepEntryDone ? " ✔" : ""));
             System.out.println("2. Add Productivity Entry" + (productivityEntryDone ? " ✔" : ""));
             System.out.println("3. Add Weather Entry" + (weatherEntryDone ? " ✔" : ""));
             System.out.println("4. Add Exercise Entry" + (exerciseEntryDone ? " ✔" : ""));
-            System.out.println("5. Add Food Entry");
-            System.out.println("6. Add Screen Time Entry");
-            System.out.println("7. Add Mood Entry");
-            System.out.println("8. Analyze Mood");
-            System.out.println("9. Display Graph");
-            System.out.println("10. Show Saved Data");
+            System.out.println("5. Add Food Entry" + (foodEntryDone ? " ✔" : ""));
+            System.out.println("6. Add Screen Time Entry" + (screenTimeEntryDone ? " ✔" : ""));
+            System.out.println("7. Analyze Mood");
+            System.out.println("8. Display Graph");
+            System.out.println("9. Show Saved Data");
+            System.out.println("10. Show Data in Table");
             System.out.println("11. Exit");
 
             int menuChoice = scanner.nextInt();
@@ -111,8 +113,8 @@ public class Main {
             switch (menuChoice) {
                 case 1:
                     if (!sleepEntryDone) {
-                        System.out.print("Enter hours of sleep: ");
-                        int hours = scanner.nextInt();
+                       // System.out.print("Enter hours of sleep: ");
+                       // int hours = scanner.nextInt();
                         scanner.nextLine(); // Consume newline
 
                         System.out.println("Select sleep quality:");
@@ -141,7 +143,7 @@ public class Main {
                         String sleepMessage = scanner.nextLine();
 
                         SleepEntry sleepEntry = new SleepEntry();
-                        sleepEntry.setHours(hours);
+                       // sleepEntry.setHours(hours);
                         sleepEntry.setSleepQuality(sleepQuality);
                         sleepEntry.setSleepMessage(sleepMessage);
                         dailyMood.addEntry(sleepEntry);
@@ -259,43 +261,87 @@ public class Main {
                     }
                     break;
                 case 5:
-                    System.out.println("Select food satisfaction level:");
-                    System.out.println("1. " + FoodSatisfactionLevel.EXCELLENT.getDescription());
-                    System.out.println("2. " + FoodSatisfactionLevel.GOOD.getDescription());
-                    System.out.println("3. " + FoodSatisfactionLevel.AVERAGE.getDescription());
-                    System.out.println("4. " + FoodSatisfactionLevel.POOR.getDescription());
-                    System.out.println("5. " + FoodSatisfactionLevel.TERRIBLE.getDescription());
+                    if (!foodEntryDone) {
+                        System.out.println("Select food satisfaction level:");
+                        System.out.println("1. " + FoodSatisfactionLevel.EXCELLENT.getDescription());
+                        System.out.println("2. " + FoodSatisfactionLevel.GOOD.getDescription());
+                        System.out.println("3. " + FoodSatisfactionLevel.AVERAGE.getDescription());
+                        System.out.println("4. " + FoodSatisfactionLevel.POOR.getDescription());
+                        System.out.println("5. " + FoodSatisfactionLevel.TERRIBLE.getDescription());
 
-                    int foodChoice = scanner.nextInt();
-                    scanner.nextLine(); // Consume newline
+                        int foodChoice = scanner.nextInt();
+                        scanner.nextLine(); // Consume newline
 
-                    FoodSatisfactionLevel foodSatisfactionLevel = switch (foodChoice) {
-                        case 1 -> FoodSatisfactionLevel.EXCELLENT;
-                        case 2 -> FoodSatisfactionLevel.GOOD;
-                        case 3 -> FoodSatisfactionLevel.AVERAGE;
-                        case 4 -> FoodSatisfactionLevel.POOR;
-                        case 5 -> FoodSatisfactionLevel.TERRIBLE;
-                        default -> {
-                            System.out.println("Invalid choice. Defaulting to AVERAGE.");
-                            yield FoodSatisfactionLevel.AVERAGE;
-                        }
-                    };
+                        FoodSatisfactionLevel foodSatisfactionLevel = switch (foodChoice) {
+                            case 1 -> FoodSatisfactionLevel.EXCELLENT;
+                            case 2 -> FoodSatisfactionLevel.GOOD;
+                            case 3 -> FoodSatisfactionLevel.AVERAGE;
+                            case 4 -> FoodSatisfactionLevel.POOR;
+                            case 5 -> FoodSatisfactionLevel.TERRIBLE;
+                            default -> {
+                                System.out.println("Invalid choice. Defaulting to AVERAGE.");
+                                yield FoodSatisfactionLevel.AVERAGE;
+                            }
+                        };
 
-                    System.out.print("Enter food description: ");
-                    String foodDescription = scanner.nextLine();
+                        System.out.print("Enter food description: ");
+                        String foodDescription = scanner.nextLine();
 
-                    FoodEntry foodEntry = new FoodEntry();
-                    foodEntry.setFoodSatisfactionLevel(foodSatisfactionLevel);
-                    foodEntry.setFoodDescription(foodDescription);
-                    dailyMood.addEntry(foodEntry);
+                        FoodEntry foodEntry = new FoodEntry();
+                        foodEntry.setFoodSatisfactionLevel(foodSatisfactionLevel);
+                        foodEntry.setFoodDescription(foodDescription);
+                        foodEntryDone = true;
+                        dailyMood.addEntry(foodEntry);
+                    } else {
+                        System.out.println("Food entry already added.");
+                    }
                     break;
-                // Other cases...
-                case 10:
+                case 6:
+                    if (!screenTimeEntryDone) {
+                        System.out.println("Select screen time level:");
+                        System.out.println("1. " + ScreenTimeLevel.NONE.getDescription());
+                        System.out.println("2. " + ScreenTimeLevel.LOW.getDescription());
+                        System.out.println("3. " + ScreenTimeLevel.MODERATE.getDescription());
+                        System.out.println("4. " + ScreenTimeLevel.HIGH.getDescription());
+                        System.out.println("5. " + ScreenTimeLevel.EXCESSIVE.getDescription());
+
+                        int screenTimeChoice = scanner.nextInt();
+                        scanner.nextLine(); // Consume newline
+
+                        ScreenTimeLevel screenTimeLevel = switch (screenTimeChoice) {
+                            case 1 -> ScreenTimeLevel.NONE;
+                            case 2 -> ScreenTimeLevel.LOW;
+                            case 3 -> ScreenTimeLevel.MODERATE;
+                            case 4 -> ScreenTimeLevel.HIGH;
+                            case 5 -> ScreenTimeLevel.EXCESSIVE;
+                            default -> {
+                                System.out.println("Invalid choice. Defaulting to NONE.");
+                                yield ScreenTimeLevel.NONE;
+                            }
+                        };
+
+                        System.out.print("Enter screen time description: ");
+                        String screenTimeDescription = scanner.nextLine();
+
+                        ScreenTimeEntry screenTimeEntry = new ScreenTimeEntry();
+                        screenTimeEntry.setScreenTimeLevel(screenTimeLevel);
+                        screenTimeEntry.setScreenTimeDescription(screenTimeDescription);
+                        screenTimeEntryDone = true;
+                        dailyMood.addEntry(screenTimeEntry);
+                    } else {
+                        System.out.println("Screen time entry already added.");
+                    }
+                    break;
+                case 9:
                     showSavedData();
+                    break;
+                case 10:
+                    CSVTableDisplay tableDisplay = new CSVTableDisplay();
+                    tableDisplay.displayTable("daily_mood_data.csv");
                     break;
                 case 11:
                     try {
-                        saveDailyMoodToFile(dailyMood, "daily_mood_data.csv");
+                        saveDailyMoodToFile(dailyMood);
                     } catch (IOException e) {
                         System.out.println("Error saving daily mood: " + e.getMessage());
                     }
@@ -307,20 +353,22 @@ public class Main {
         }
     }
 
-    private static void saveDailyMoodToFile(DailyMood dailyMood, String filename) throws IOException {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename, true))) {
-            writer.write(dailyMood.getDate() + "," + dailyMood.getMood() + "\n");
+    private static void saveDailyMoodToFile(DailyMood dailyMood) throws IOException {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("daily_mood_data.csv", true))) {
+            writer.write(dailyMood.getDate() + ";" + dailyMood.getMood() + "\n");
             for (LogEntry entry : dailyMood.getEntries()) {
                 if (entry instanceof SleepEntry) {
-                    writer.write("SleepEntry," + ((SleepEntry) entry).toCSV() + "\n");
+                    writer.write("SleepEntry;" + ((SleepEntry) entry).toCSV() + "\n");
                 } else if (entry instanceof ProductivityEntry) {
-                    writer.write("ProductivityEntry," + ((ProductivityEntry) entry).toCSV() + "\n");
+                    writer.write("ProductivityEntry;" + ((ProductivityEntry) entry).toCSV() + "\n");
                 } else if (entry instanceof WeatherEntry) {
-                    writer.write("WeatherEntry," + ((WeatherEntry) entry).toCSV() + "\n");
+                    writer.write("WeatherEntry;" + ((WeatherEntry) entry).toCSV() + "\n");
                 } else if (entry instanceof ExerciseEntry) {
-                    writer.write("ExerciseEntry," + ((ExerciseEntry) entry).toCSV() + "\n");
+                    writer.write("ExerciseEntry;" + ((ExerciseEntry) entry).toCSV() + "\n");
+                } else if (entry instanceof ScreenTimeEntry) {
+                    writer.write("ScreenTimeEntry;" + ((ScreenTimeEntry) entry).toCSV() + "\n");
                 } else if (entry instanceof FoodEntry) {
-                    writer.write("FoodEntry," + ((FoodEntry) entry).toCSV() + "\n");
+                    writer.write("FoodEntry;" + ((FoodEntry) entry).toCSV() + "\n");
                 }
                 // Add other entry types here...
             }

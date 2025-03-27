@@ -30,11 +30,11 @@ public class SleepEntry extends LogEntry {
     }
 
     public String toCSV() {
-        return hours + "," + sleepQuality + "," + sleepMessage;
+        return sleepQuality + ";" + sleepMessage;
     }
 
     public static SleepEntry fromCSV(String csv) {
-        String[] parts = csv.split(",");
+        String[] parts = csv.split(";");
         SleepEntry entry = new SleepEntry();
         entry.setHours(Integer.parseInt(parts[0]));
         entry.setSleepQuality(SleepQualities.valueOf(parts[1]));

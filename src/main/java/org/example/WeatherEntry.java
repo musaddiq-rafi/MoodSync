@@ -21,11 +21,11 @@ public class WeatherEntry extends LogEntry {
     }
 
     public String toCSV() {
-        return weatherLevel + "," + weatherDescription;
+        return weatherLevel + ";" + weatherDescription;
     }
 
     public static WeatherEntry fromCSV(String csv) {
-        String[] parts = csv.split(",");
+        String[] parts = csv.split(";");
         WeatherEntry entry = new WeatherEntry();
         entry.setWeatherLevel(WeatherLevel.valueOf(parts[0]));
         entry.setWeatherDescription(parts[1]);
