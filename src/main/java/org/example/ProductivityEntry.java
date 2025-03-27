@@ -1,25 +1,34 @@
 package org.example;
 
-public class ProductivityEntry {
-    private int productivityLevel;
+public class ProductivityEntry extends LogEntry {
+    private ProductivityLevel productivityLevel;
     private String productivityDescription;
 
-    public int getProductivityLevel(){
+    public ProductivityLevel getProductivityLevel() {
         return productivityLevel;
     }
-    public int setProductivityLevel(int productivityLevel){
+
+    public void setProductivityLevel(ProductivityLevel productivityLevel) {
         this.productivityLevel = productivityLevel;
-        return productivityLevel;
     }
-    public String getProductivityDescription(){
+
+    public String getProductivityDescription() {
         return productivityDescription;
     }
-    public String setProductivityDescription(String productivityDescription){
+
+    public void setProductivityDescription(String productivityDescription) {
         this.productivityDescription = productivityDescription;
-        return productivityDescription;
     }
 
-    public void setTasksCompleted(int tasksCompleted) {
+    public String toCSV() {
+        return productivityLevel + "," + productivityDescription;
+    }
 
+    public static ProductivityEntry fromCSV(String csv) {
+        String[] parts = csv.split(",");
+        ProductivityEntry entry = new ProductivityEntry();
+        entry.setProductivityLevel(ProductivityLevel.valueOf(parts[0]));
+        entry.setProductivityDescription(parts[1]);
+        return entry;
     }
 }

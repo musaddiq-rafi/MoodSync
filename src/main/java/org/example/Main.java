@@ -1,5 +1,10 @@
 package org.example;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.util.Scanner;
 
 public class Main {
@@ -83,10 +88,11 @@ public class Main {
     private static void displayInnerMenu(Scanner scanner, MoodTracker moodTracker, DailyMood dailyMood) {
         boolean exit = false;
         boolean sleepEntryDone = false;
+        boolean productivityEntryDone = false;
 
         while (!exit) {
             System.out.println("1. Add Sleep Entry" + (sleepEntryDone ? " ✔" : ""));
-            System.out.println("2. Add Productivity Entry");
+            System.out.println("2. Add Productivity Entry"+(productivityEntryDone ? " ✔" : ""));
             System.out.println("3. Add Weather Entry");
             System.out.println("4. Add Exercise Entry");
             System.out.println("5. Add Food Entry");
@@ -94,7 +100,8 @@ public class Main {
             System.out.println("7. Add Mood Entry");
             System.out.println("8. Analyze Mood");
             System.out.println("9. Display Graph");
-            System.out.println("10. Exit");
+            System.out.println("10. Show Saved Data");
+            System.out.println("11. Exit");
 
             int menuChoice = scanner.nextInt();
             scanner.nextLine(); // Consume newline
@@ -128,23 +135,92 @@ public class Main {
                             }
                         };
 
+                        System.out.print("Enter what you feel about the sleep today: ");
+                        String sleepMessage = scanner.nextLine();
+
                         SleepEntry sleepEntry = new SleepEntry();
                         sleepEntry.setHours(hours);
                         sleepEntry.setSleepQuality(sleepQuality);
+                        sleepEntry.setSleepMessage(sleepMessage);
                         dailyMood.addEntry(sleepEntry);
                         sleepEntryDone = true;
                     } else {
                         System.out.println("Sleep entry already added.");
                     }
                     break;
+                case 2:
+                    System.out.println("Select productivity level:");
+                    System.out.println("1. " + ProductivityLevel.EXTREMELY_PRODUCTIVE.getDescription());
+                    System.out.println("2. " + ProductivityLevel.PRODUCTIVE.getDescription());
+                    System.out.println("3. " + ProductivityLevel.NEUTRAL.getDescription());
+                    System.out.println("4. " + ProductivityLevel.UNPRODUCTIVE.getDescription());
+                    System.out.println("5. " + ProductivityLevel.EXTREMELY_UNPRODUCTIVE.getDescription());
+
+                    int productivityChoice = scanner.nextInt();
+                    scanner.nextLine(); // Consume newline
+
+                    ProductivityLevel productivityLevel = switch (productivityChoice) {
+                        case 1 -> ProductivityLevel.EXTREMELY_PRODUCTIVE;
+                        case 2 -> ProductivityLevel.PRODUCTIVE;
+                        case 3 -> ProductivityLevel.NEUTRAL;
+                        case 4 -> ProductivityLevel.UNPRODUCTIVE;
+                        case 5 -> ProductivityLevel.EXTREMELY_UNPRODUCTIVE;
+                        default -> {
+                            System.out.println("Invalid choice. Defaulting to NEUTRAL.");
+                            yield ProductivityLevel.NEUTRAL;
+                        }
+                    };
+
+                    System.out.print("Enter what productive tasks you have done today: ");
+                    String productivityDescription = scanner.nextLine();
+
+                    ProductivityEntry productivityEntry = new ProductivityEntry();
+                    productivityEntry.setProductivityLevel(productivityLevel);
+                    productivityEntry.setProductivityDescription(productivityDescription);
+                    productivityEntryDone = true;
+                    dailyMood.addEntry(productivityEntry);
+                    break;
                 // Other cases...
-//                case 10:
-//                    moodTracker.addDailyMood(dailyMood);
-//                    exit = true;
-//                    break;
+                case 10:
+                    showSavedData();
+                    break;
+                case 11:
+                   // moodTracker.addDailyMood(dailyMood);
+                    try {
+                        saveDailyMoodToFile(dailyMood, "daily_mood_data.csv");
+                    } catch (IOException e) {
+                        System.out.println("Error saving daily mood: " + e.getMessage());
+                    }
+                    exit = true;
+                    break;
                 default:
                     System.out.println("Invalid choice.");
             }
+        }
+    }
+
+    private static void saveDailyMoodToFile(DailyMood dailyMood, String filename) throws IOException {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename, true))) {
+            writer.write(dailyMood.getDate() + "," + dailyMood.getMood() + "\n");
+            for (LogEntry entry : dailyMood.getEntries()) {
+                if (entry instanceof SleepEntry) {
+                    writer.write("SleepEntry," + ((SleepEntry) entry).toCSV() + "\n");
+                } else if (entry instanceof ProductivityEntry) {
+                    writer.write("ProductivityEntry," + ((ProductivityEntry) entry).toCSV() + "\n");
+                }
+                // Add other entry types here...
+            }
+        }
+    }
+
+    private static void showSavedData() {
+        try (BufferedReader reader = new BufferedReader(new FileReader("daily_mood_data.csv"))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                System.out.println(line);
+            }
+        } catch (IOException e) {
+            System.out.println("Error reading saved data: " + e.getMessage());
         }
     }
 }
