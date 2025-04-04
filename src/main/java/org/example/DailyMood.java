@@ -9,6 +9,63 @@ public class DailyMood {
     private MoodLevel mood;
     private List<LogEntry> entries;
 
+    // Boolean flags for each entry type
+    private boolean hasSleepEntry = false;
+    private boolean hasProductivityEntry = false;
+    private boolean hasWeatherEntry = false;
+    private boolean hasExerciseEntry = false;
+    private boolean hasFoodEntry = false;
+
+    public boolean isHasSleepEntry() {
+        return hasSleepEntry;
+    }
+
+    public void setHasSleepEntry(boolean hasSleepEntry) {
+        this.hasSleepEntry = hasSleepEntry;
+    }
+
+    public boolean isHasProductivityEntry() {
+        return hasProductivityEntry;
+    }
+
+    public void setHasProductivityEntry(boolean hasProductivityEntry) {
+        this.hasProductivityEntry = hasProductivityEntry;
+    }
+
+    public boolean isHasWeatherEntry() {
+        return hasWeatherEntry;
+    }
+
+    public void setHasWeatherEntry(boolean hasWeatherEntry) {
+        this.hasWeatherEntry = hasWeatherEntry;
+    }
+
+    public boolean isHasExerciseEntry() {
+        return hasExerciseEntry;
+    }
+
+    public void setHasExerciseEntry(boolean hasExerciseEntry) {
+        this.hasExerciseEntry = hasExerciseEntry;
+    }
+
+    public boolean isHasFoodEntry() {
+        return hasFoodEntry;
+    }
+
+    public void setHasFoodEntry(boolean hasFoodEntry) {
+        this.hasFoodEntry = hasFoodEntry;
+    }
+
+    public boolean isHasScreenTimeEntry() {
+        return hasScreenTimeEntry;
+    }
+
+    public void setHasScreenTimeEntry(boolean hasScreenTimeEntry) {
+        this.hasScreenTimeEntry = hasScreenTimeEntry;
+    }
+
+    private boolean hasScreenTimeEntry = false;
+
     public DailyMood(String date) {
         this.date = date;
         this.entries = new ArrayList<>();
@@ -26,8 +83,33 @@ public class DailyMood {
         this.mood = mood;
     }
 
-    public void addEntry(LogEntry entry) {
-        entries.add(entry);
+    public boolean addEntry(LogEntry entry) {
+        if (entry instanceof SleepEntry && !hasSleepEntry) {
+            entries.add(entry);
+            hasSleepEntry = true;
+            return true;
+        } else if (entry instanceof ProductivityEntry && !hasProductivityEntry) {
+            entries.add(entry);
+            hasProductivityEntry = true;
+            return true;
+        } else if (entry instanceof WeatherEntry && !hasWeatherEntry) {
+            entries.add(entry);
+            hasWeatherEntry = true;
+            return true;
+        } else if (entry instanceof ExerciseEntry && !hasExerciseEntry) {
+            entries.add(entry);
+            hasExerciseEntry = true;
+            return true;
+        } else if (entry instanceof FoodEntry && !hasFoodEntry) {
+            entries.add(entry);
+            hasFoodEntry = true;
+            return true;
+        } else if (entry instanceof ScreenTimeEntry && !hasScreenTimeEntry) {
+            entries.add(entry);
+            hasScreenTimeEntry = true;
+            return true;
+        }
+        return false; // Entry type already exists
     }
 
     public List<LogEntry> getEntries() {

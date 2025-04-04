@@ -125,6 +125,7 @@ public class Main {
         }
     }
     private static void addSleepEntry(Scanner scanner, DailyMood dailyMood) {
+
         System.out.print("Enter hours of sleep: ");
         int hours = scanner.nextInt();
         scanner.nextLine(); // Consume newline
@@ -159,9 +160,16 @@ public class Main {
         sleepEntry.setSleepQuality(sleepQuality);
         sleepEntry.setSleepMessage(sleepMessage);
         dailyMood.addEntry(sleepEntry);
+        if (dailyMood.addEntry(sleepEntry)) {
+            System.out.println("Sleep entry added successfully ✓");
+        } else {
+            System.out.println("Failed to add sleep entry.");
+        }
     }
 
     private static void addProductivityEntry(Scanner scanner, DailyMood dailyMood) {
+
+
         System.out.println("Select productivity level:");
         System.out.println("1. " + ProductivityLevel.EXTREMELY_PRODUCTIVE.getDescription());
         System.out.println("2. " + ProductivityLevel.PRODUCTIVE.getDescription());

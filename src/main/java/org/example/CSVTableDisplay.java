@@ -3,43 +3,43 @@ package org.example;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class CSVTableDisplay {
+    // Inner class to hold data for each day
+    private static class DailyMoodData {
+        String timestamp;
+        String date;
+        String mood;
+        List<String[]> entries = new ArrayList<>();
+    }
+
     public void displayTable(String filename) {
-        List<String[]> rows = new ArrayList<>();
-        int[] columnWidths = null;
-        String date = "";
-        String mood = "";
+        List<DailyMoodData> dailyMoodDataList = new ArrayList<>();
+        DailyMoodData currentMood = null;
 
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
             String line;
 
-            // Read header line (Date and Mood)
-            if ((line = reader.readLine()) != null) {
-                String[] headerParts = line.split(";");
-                if (headerParts.length >= 3) {
-                    date = headerParts[1].trim();
-                    mood = headerParts[2].trim();
-                }
-            }
-
-            // Read the rest of the entries (Type;Feel;Note)
             while ((line = reader.readLine()) != null) {
                 String[] columns = line.split(";");
-                rows.add(columns);
 
-                if (columnWidths == null) {
-                    columnWidths = new int[columns.length];
-                } else if (columns.length > columnWidths.length) {
-                    int[] newColumnWidths = new int[columns.length];
-                    System.arraycopy(columnWidths, 0, newColumnWidths, 0, columnWidths.length);
-                    columnWidths = newColumnWidths;
+                // Check if this is a header line (timestamp;date;mood)
+                if (columns.length == 3 && !line.startsWith("SleepEntry") &&
+                        !line.startsWith("ProductivityEntry") && !line.startsWith("WeatherEntry") &&
+                        !line.startsWith("ExerciseEntry") && !line.startsWith("ScreenTimeEntry") &&
+                        !line.startsWith("FoodEntry")) {
+
+                    // Create a new daily mood entry
+                    currentMood = new DailyMoodData();
+                    currentMood.timestamp = columns[0].trim();
+                    currentMood.date = columns[1].trim();
+                    currentMood.mood = columns[2].trim();
+                    dailyMoodDataList.add(currentMood);
                 }
-
-                for (int i = 0; i < columns.length; i++) {
-                    columnWidths[i] = Math.max(columnWidths[i], columns[i].length());
+                // If we have a current mood and this is an entry line
+                else if (currentMood != null) {
+                    currentMood.entries.add(columns);
                 }
             }
         } catch (IOException e) {
@@ -47,15 +47,36 @@ public class CSVTableDisplay {
             return;
         }
 
-        if (rows.isEmpty()) {
+        if (dailyMoodDataList.isEmpty()) {
             System.out.println("No data found in CSV file.");
             return;
         }
 
+        // Display each day's data
+        for (DailyMoodData dailyMood : dailyMoodDataList) {
+            displayDailyMoodData(dailyMood);
+            System.out.println(); // Add spacing between days
+        }
+    }
+
+    private void displayDailyMoodData(DailyMoodData dailyMood) {
+        if (dailyMood.entries.isEmpty()) {
+            System.out.println("No entries for this day.");
+            return;
+        }
+
+        // Calculate column widths
+        int[] columnWidths = {20, 20, 20}; // Type, Feel, Note
+        for (String[] entry : dailyMood.entries) {
+            for (int i = 0; i < Math.min(entry.length, 3); i++) {
+                columnWidths[i] = Math.max(columnWidths[i], entry[i].length());
+            }
+        }
+
         // Print mood header
-        System.out.println("=".repeat(50));
-        System.out.printf(" Mood Log - Date: %s | Mood: %s%n", date, mood);
-        System.out.println("=".repeat(50));
+        System.out.println("=".repeat(60));
+        System.out.printf(" Mood Log - Date: %s | Mood: %s%n", dailyMood.date, dailyMood.mood);
+        System.out.println("=".repeat(60));
 
         // Print column headers
         String[] headers = {"Type", "Feel", "Note"};
@@ -71,9 +92,13 @@ public class CSVTableDisplay {
         printSeparator(columnWidths);
 
         // Print data rows
-        for (String[] row : rows) {
-            for (int i = 0; i < row.length; i++) {
+        for (String[] row : dailyMood.entries) {
+            for (int i = 0; i < Math.min(row.length, 3); i++) {
                 System.out.print("| " + padRight(row[i], columnWidths[i]) + " ");
+            }
+            // Fill missing columns with empty space
+            for (int i = row.length; i < 3; i++) {
+                System.out.print("| " + padRight("", columnWidths[i]) + " ");
             }
             System.out.println("|");
         }
