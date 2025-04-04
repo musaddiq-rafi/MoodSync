@@ -1,7 +1,15 @@
-2025-10-01;EXTREMELY_HAPPY
-SleepEntry;GOOD;it was good i believe
-ProductivityEntry;PRODUCTIVE;project
-WeatherEntry;SUNNY;it was sunny
-ExerciseEntry;LIGHT;good exercise
-FoodEntry;EXCELLENT;good
-ScreenTimeEntry;NONE;0
+2025-04-04 22:43:25;2025-05-01;EXTREMELY_HAPPY
+SleepEntry;GOOD;it was good
+ProductivityEntry;EXTREMELY_PRODUCTIVE;coding
+WeatherEntry;CLOUDY;it was good
+ExerciseEntry;NONE;no exercise
+FoodEntry;EXCELLENT;attended a wedding ceremony
+ScreenTimeEntry;HIGH;netflix
+2025-04-04 23:01:03;1;EXTREMELY_HAPPY
+2025-04-04 23:02:29;2025-10-06;SAD
+SleepEntry;POOR;it was bad
+ProductivityEntry;NEUTRAL;i was feeling bad
+ExerciseEntry;LIGHT;hmm
+FoodEntry;POOR;only bhat kheyechi
+FoodEntry;EXCELLENT;only bhat keheyechi
+ScreenTimeEntry;NONE;no
