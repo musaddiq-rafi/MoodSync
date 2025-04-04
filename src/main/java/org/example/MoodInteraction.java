@@ -1,5 +1,6 @@
 package org.example;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class MoodInteraction {
@@ -49,6 +50,7 @@ public class MoodInteraction {
                 case 4 -> EntryHandler.addExerciseEntry(scanner, dailyMood);
                 case 5 -> EntryHandler.addFoodEntry(scanner, dailyMood);
                 case 6 -> EntryHandler.addScreenTimeEntry(scanner, dailyMood);
+                case 7 -> showMoodAnalyzerMenu(scanner, dataManager);
                 case 9 -> dataManager.showSavedData();
                 case 10 -> dataManager.displayTable();
                 case 11 -> {
@@ -57,6 +59,44 @@ public class MoodInteraction {
                 }
                 default -> System.out.println("Invalid choice.");
             }
+        }
+    }
+
+    private static void showMoodAnalyzerMenu(Scanner scanner, DataManager dataManager) {
+        System.out.println("\n📊 MOOD ANALYZER");
+        System.out.println("------------------");
+
+        List<String> availableDates = dataManager.getAvailableDates();
+
+        if (availableDates.isEmpty()) {
+            System.out.println("No mood entries found. Please add entries first.");
+            return;
+        }
+
+        System.out.println("Select a date to analyze:");
+        for (int i = 0; i < availableDates.size(); i++) {
+            System.out.println((i + 1) + ". " + availableDates.get(i));
+        }
+
+        try {
+            int selection = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
+
+            if (selection >= 1 && selection <= availableDates.size()) {
+                String selectedDate = availableDates.get(selection - 1);
+                DailyMood selectedMood = dataManager.findMoodByDate(selectedDate);
+
+                if (selectedMood != null) {
+                    MoodAnalyzer.analyzeMood(selectedMood, dataManager);
+                } else {
+                    System.out.println("Error: Failed to load mood data for " + selectedDate);
+                }
+            } else {
+                System.out.println("Invalid selection. Please try again.");
+            }
+        } catch (Exception e) {
+            System.out.println("Invalid input. Please enter a number.");
+            scanner.nextLine(); // Clear the scanner buffer
         }
     }
 }
