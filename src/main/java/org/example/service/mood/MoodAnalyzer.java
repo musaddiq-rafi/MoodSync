@@ -260,19 +260,40 @@ public class MoodAnalyzer {
             System.out.println("📈 Productivity: No data");
         }
 
-        // Screen time analysis
         if (mood.isHasScreenTimeEntry()) {
             ScreenTimeEntry entry = findEntry(mood, ScreenTimeEntry.class);
             assert entry != null;
             System.out.println(GREEN + "📱 Screen Time: " + RESET + entry.getScreenTimeLevel().getDescription());
             System.out.println(" \uD83D\uDCDD  " + YELLOW + "What you wrote about your screen time that day : " + entry.getScreenTimeDescription() + RESET);
+            System.out.println(" \uD83E\uDD13☝\uFE0F Remember, screen time can affect your mood and sleep ");
 
+            System.out.println(CYAN + "ANALYZED INSIGHT:" + RESET);
             switch (entry.getScreenTimeLevel()) {
-                case NONE -> System.out.println("   👏 Great job staying off screens!");
-                case LOW -> System.out.println("   👍 Balanced screen use is good for mental clarity.");
-                case MODERATE -> System.out.println("   ⚖️ Keep an eye on usage, especially before bed.");
-                case HIGH -> System.out.println("   📉 Consider taking screen breaks during the day.");
-                case EXCESSIVE -> System.out.println("   ⚠️ High screen time can affect mood and sleep. Try unplugging a bit.");
+                case NONE -> {
+                    System.out.println("   👏 Great job staying off screens!");
+                    System.out.println("   Minimal screen time can improve focus and sleep quality.");
+                    System.out.println("   Consider maintaining this balance for better mental health.");
+                }
+                case LOW -> {
+                    System.out.println("   👍 Balanced screen use is good for mental clarity.");
+                    System.out.println("   Low screen time helps maintain mental clarity and reduces eye strain.");
+                    System.out.println("   Consider using this time for hobbies or outdoor activities.");
+                }
+                case MODERATE -> {
+                    System.out.println("   ⚖️ Keep an eye on usage, especially before bed.");
+                    System.out.println("   Moderate screen time is manageable but watch for overuse.");
+                    System.out.println("   Consider setting limits on screen time, especially before bed.");
+                }
+                case HIGH -> {
+                    System.out.println("   📉 Consider taking screen breaks during the day.");
+                    System.out.println("   High screen time can affect your mood and sleep. Take breaks.");
+                    System.out.println("   Try to incorporate more offline activities into your routine.");
+                }
+                case EXCESSIVE -> {
+                    System.out.println("   ⚠️ High screen time can affect mood and sleep. Try unplugging a bit.");
+                    System.out.println("   Excessive screen time can lead to negative effects. Try to unplug.");
+                    System.out.println("   Consider setting specific times for screen use and breaks.");
+                }
             }
         } else {
             System.out.println("📱 Screen Time: No data");
