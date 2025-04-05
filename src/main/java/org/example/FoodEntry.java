@@ -25,10 +25,11 @@ public class FoodEntry extends LogEntry {
     }
 
     public static FoodEntry fromCSV(String csv) {
-        String[] parts = csv.split(";");
+        String[] parts = csv.split(";", 2); // <-- split only into 2 parts
         FoodEntry entry = new FoodEntry();
         entry.setFoodSatisfactionLevel(FoodSatisfactionLevel.valueOf(parts[0]));
         entry.setFoodDescription(parts[1]);
         return entry;
     }
+
 }

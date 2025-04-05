@@ -1,17 +1,15 @@
-// In `src/main/java/org/example/DataManager.java`
 package org.example;
 
 import java.io.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class DataManager {
+    private static final String DATA_FILE = "daily_mood_data.csv";
+
     public void saveDailyMoodToFile(DailyMood dailyMood) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("daily_mood_data.csv", true))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(DATA_FILE, true))) {
             String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
             writer.write(timestamp + ";" + dailyMood.getDate() + ";" + dailyMood.getMood() + "\n");
             for (LogEntry entry : dailyMood.getEntries()) {
@@ -35,7 +33,7 @@ public class DataManager {
     }
 
     public void showSavedData() {
-        try (BufferedReader reader = new BufferedReader(new FileReader("daily_mood_data.csv"))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(DATA_FILE))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 System.out.println(line);
@@ -47,33 +45,41 @@ public class DataManager {
 
     public void displayTable() {
         CSVTableDisplay tableDisplay = new CSVTableDisplay();
-        tableDisplay.displayTable("daily_mood_data.csv");
+        tableDisplay.displayTable(DATA_FILE);
     }
 
     public List<DailyMood> loadAllDailyMoods() {
         List<DailyMood> allMoods = new ArrayList<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader("daily_mood_data.csv"))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(DATA_FILE))) {
             String line;
             DailyMood currentMood = null;
+
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(";");
-                if (parts.length == 3) {
+                if (parts.length == 3 && !isEntryType(parts[0])) {
                     currentMood = new DailyMood(parts[1]);
                     try {
-                        currentMood.setMood(MoodLevel.valueOf(parts[2]));
+                        currentMood.setMood(MoodLevel.valueOf(parts[2].trim()));
                     } catch (IllegalArgumentException e) {
                         System.out.println("Warning: Invalid mood level '" + parts[2] + "' in data. Skipping entry.");
                         continue;
                     }
                     allMoods.add(currentMood);
-                } else if (currentMood != null) {
-                    switch (parts[0]) {
-                        case "SleepEntry" -> currentMood.addEntry(SleepEntry.fromCSV(parts[1]));
-                        case "ProductivityEntry" -> currentMood.addEntry(ProductivityEntry.fromCSV(parts[1]));
-                        case "WeatherEntry" -> currentMood.addEntry(WeatherEntry.fromCSV(parts[1]));
-                        case "ExerciseEntry" -> currentMood.addEntry(ExerciseEntry.fromCSV(parts[1]));
-                        case "ScreenTimeEntry" -> currentMood.addEntry(ScreenTimeEntry.fromCSV(parts[1]));
-                        case "FoodEntry" -> currentMood.addEntry(FoodEntry.fromCSV(parts[1]));
+                } else if (currentMood != null && isEntryType(parts[0]) && parts.length >= 2) {
+                    String entryType = parts[0];
+                    String entryCSV = getEntryCSV(parts);
+
+                    try {
+                        switch (entryType) {
+                            case "SleepEntry" -> currentMood.addEntry(SleepEntry.fromCSV(entryCSV));
+                            case "ProductivityEntry" -> currentMood.addEntry(ProductivityEntry.fromCSV(entryCSV));
+                            case "WeatherEntry" -> currentMood.addEntry(WeatherEntry.fromCSV(entryCSV));
+                            case "ExerciseEntry" -> currentMood.addEntry(ExerciseEntry.fromCSV(entryCSV));
+                            case "ScreenTimeEntry" -> currentMood.addEntry(ScreenTimeEntry.fromCSV(entryCSV));
+                            case "FoodEntry" -> currentMood.addEntry(FoodEntry.fromCSV(entryCSV));
+                        }
+                    } catch (Exception e) {
+                        System.out.println("Error parsing entry: " + e.getMessage());
                     }
                 }
             }
@@ -85,12 +91,12 @@ public class DataManager {
 
     public List<String> getAvailableDates() {
         Set<String> uniqueDates = new HashSet<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader("daily_mood_data.csv"))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(DATA_FILE))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(";");
-                if (parts.length == 3) {
-                    uniqueDates.add(parts[1]);
+                if (parts.length == 3 && !isEntryType(parts[0])) {
+                    uniqueDates.add(parts[1].trim());
                 }
             }
         } catch (IOException e) {
@@ -100,20 +106,20 @@ public class DataManager {
     }
 
     public DailyMood findMoodByDate(String targetDate) {
-        try (BufferedReader reader = new BufferedReader(new FileReader("daily_mood_data.csv"))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(DATA_FILE))) {
             String line;
             DailyMood currentMood = null;
             boolean foundDate = false;
 
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(";");
-                if (parts.length == 3) {
-                    String date = parts[1];
+                if (parts.length == 3 && !isEntryType(parts[0])) {
+                    String date = parts[1].trim();
                     if (date.equals(targetDate)) {
                         foundDate = true;
                         currentMood = new DailyMood(date);
                         try {
-                            currentMood.setMood(MoodLevel.valueOf(parts[2]));
+                            currentMood.setMood(MoodLevel.valueOf(parts[2].trim()));
                         } catch (IllegalArgumentException e) {
                             System.out.println("Warning: Invalid mood level in data. Using NEUTRAL instead.");
                             currentMood.setMood(MoodLevel.NEUTRAL);
@@ -121,14 +127,21 @@ public class DataManager {
                     } else if (foundDate) {
                         break;
                     }
-                } else if (foundDate && currentMood != null && parts.length > 1) {
-                    switch (parts[0]) {
-                        case "SleepEntry" -> currentMood.addEntry(SleepEntry.fromCSV(parts[1]));
-                        case "ProductivityEntry" -> currentMood.addEntry(ProductivityEntry.fromCSV(parts[1]));
-                        case "WeatherEntry" -> currentMood.addEntry(WeatherEntry.fromCSV(parts[1]));
-                        case "ExerciseEntry" -> currentMood.addEntry(ExerciseEntry.fromCSV(parts[1]));
-                        case "ScreenTimeEntry" -> currentMood.addEntry(ScreenTimeEntry.fromCSV(parts[1]));
-                        case "FoodEntry" -> currentMood.addEntry(FoodEntry.fromCSV(parts[1]));
+                } else if (foundDate && currentMood != null && isEntryType(parts[0]) && parts.length >= 2) {
+                    String entryType = parts[0];
+                    String entryCSV = getEntryCSV(parts);
+
+                    try {
+                        switch (entryType) {
+                            case "SleepEntry" -> currentMood.addEntry(SleepEntry.fromCSV(entryCSV));
+                            case "ProductivityEntry" -> currentMood.addEntry(ProductivityEntry.fromCSV(entryCSV));
+                            case "WeatherEntry" -> currentMood.addEntry(WeatherEntry.fromCSV(entryCSV));
+                            case "ExerciseEntry" -> currentMood.addEntry(ExerciseEntry.fromCSV(entryCSV));
+                            case "ScreenTimeEntry" -> currentMood.addEntry(ScreenTimeEntry.fromCSV(entryCSV));
+                            case "FoodEntry" -> currentMood.addEntry(FoodEntry.fromCSV(entryCSV));
+                        }
+                    } catch (Exception e) {
+                        System.out.println("Error parsing entry: " + e.getMessage());
                     }
                 }
             }
@@ -137,5 +150,19 @@ public class DataManager {
             System.out.println("Error finding mood by date: " + e.getMessage());
             return null;
         }
+    }
+
+    private boolean isEntryType(String value) {
+        return switch (value.trim()) {
+            case "SleepEntry", "ProductivityEntry", "WeatherEntry",
+                 "ExerciseEntry", "ScreenTimeEntry", "FoodEntry" -> true;
+            default -> false;
+        };
+    }
+
+    private String getEntryCSV(String[] parts) {
+        // Joins everything after the first part into a single CSV string
+        if (parts.length < 2) return "";
+        return String.join(";", Arrays.copyOfRange(parts, 1, parts.length));
     }
 }

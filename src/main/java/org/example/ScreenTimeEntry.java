@@ -25,7 +25,7 @@ public class ScreenTimeEntry extends LogEntry {
     }
 
     public static ScreenTimeEntry fromCSV(String csv) {
-        String[] parts = csv.split(";");
+        String[] parts = csv.split(";",2); // <-- split only into 2 parts
         ScreenTimeEntry entry = new ScreenTimeEntry();
         entry.setScreenTimeLevel(ScreenTimeLevel.valueOf(parts[0]));
         entry.setScreenTimeDescription(parts[1]);

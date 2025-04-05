@@ -23,7 +23,7 @@ public class MoodAnalyzer {
             String dayName = parsedDate.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.getDefault());
 
             System.out.println("\n╔══════════════════════════════════════════╗");
-            System.out.println("║     MOOD ANALYSIS: " + date + " (" + dayName + ")     ║");
+            System.out.println("║     MOOD ANALYSIS: " + date + " (" + dayName + ")║");
             System.out.println("╚══════════════════════════════════════════╝");
 
             // Current mood status
@@ -33,7 +33,7 @@ public class MoodAnalyzer {
             analyzeEntries(mood);
 
             // Find correlations with historical data
-            findCorrelations(mood, dataManager);
+         //   findCorrelations(mood, dataManager);
 
             // Provide personalized recommendations
             provideRecommendations(mood);
@@ -55,12 +55,14 @@ public class MoodAnalyzer {
             SleepEntry entry = findEntry(mood, SleepEntry.class);
             assert entry != null;
             System.out.println("🛌 Sleep: " + entry.getSleepQuality().getDescription());
-            System.out.println("   Hours: " + entry.getHours());
+            System.out.println(" \uD83D\uDCDD  What you wrote about your sleep that day : " + entry.getSleepMessage());
 
-            if (entry.getHours() < 7) {
-                System.out.println("   ⚠️ Sleep deficit may be affecting your mood");
-            } else if (entry.getHours() > 9) {
-                System.out.println("   ℹ️ Oversleeping can sometimes affect energy levels");
+            switch (entry.getSleepQuality()) {
+                case EXCELLENT -> System.out.println("   🌟 Great sleep! Keep your routine consistent.");
+                case GOOD -> System.out.println("   😊 Good sleep boosts your mood. Stay consistent.");
+                case AVERAGE -> System.out.println("   😐 Consider reducing screen time before bed.");
+                case POOR -> System.out.println("   😟 Try relaxing activities before sleep like reading.");
+                case TERRIBLE -> System.out.println("   ⚠️ Poor sleep may be affecting your mood. Reflect on your nighttime habits.");
             }
         } else {
             System.out.println("🛌 Sleep: No data");
@@ -71,9 +73,14 @@ public class MoodAnalyzer {
             ExerciseEntry entry = findEntry(mood, ExerciseEntry.class);
             assert entry != null;
             System.out.println("🏃 Exercise: " + entry.getExerciseLevel().getDescription());
+            System.out.println(" \uD83D\uDCDD  What you wrote about your exercise that day : " + entry.getExerciseDescription());
 
-            if (mood.getMood().ordinal() < 2 && entry.getExerciseLevel() == ExerciseLevel.NONE) {
-                System.out.println("   💡 Exercise can help improve negative moods");
+            switch (entry.getExerciseLevel()) {
+                case NONE -> System.out.println("   🧘 Consider light stretching or a walk to get started.");
+                case LIGHT -> System.out.println("   👍 Light exercise is a good foundation. Keep it up!");
+                case MODERATE -> System.out.println("   💪 You're maintaining a healthy level of activity.");
+                case INTENSE -> System.out.println("   🔥 Impressive! Don’t forget to rest and hydrate.");
+                case EXTREME -> System.out.println("   🚀 Extreme training—make sure you're not overexerting.");
             }
         } else {
             System.out.println("🏃 Exercise: No data");
@@ -83,8 +90,16 @@ public class MoodAnalyzer {
         if (mood.isHasFoodEntry()) {
             FoodEntry entry = findEntry(mood, FoodEntry.class);
             assert entry != null;
-            System.out.println("🍽️ Food: " + entry.getFoodSatisfactionLevel());
-            System.out.println("   Description: " + entry.getFoodDescription());
+            System.out.println("🍽️ Food: " + entry.getFoodSatisfactionLevel().getDescription());
+            System.out.println(" \uD83D\uDCDD  What you wrote about your food that day : " + entry.getFoodDescription());
+
+            switch (entry.getFoodSatisfactionLevel()) {
+                case EXCELLENT -> System.out.println("   🥗 You're fueling your body well. Keep choosing nourishing meals.");
+                case GOOD -> System.out.println("   😊 Good meals contribute to positive energy and mood.");
+                case AVERAGE -> System.out.println("   🍱 Consider adding more variety or nutrients.");
+                case POOR -> System.out.println("   😞 Unfulfilling meals may be affecting your energy levels.");
+                case TERRIBLE -> System.out.println("   🚫 Try to prioritize a balanced meal, even if you're busy.");
+            }
         } else {
             System.out.println("🍽️ Food: No data");
         }
@@ -94,6 +109,15 @@ public class MoodAnalyzer {
             WeatherEntry entry = findEntry(mood, WeatherEntry.class);
             assert entry != null;
             System.out.println("☁️ Weather: " + entry.getWeatherLevel().getDescription());
+            System.out.println(" \uD83D\uDCDD  What you wrote about your weather that day : " + entry.getWeatherDescription());
+
+            switch (entry.getWeatherLevel()) {
+                case SUNNY -> System.out.println("   ☀️ Great day for outdoor activities!");
+                case CLOUDY -> System.out.println("   🌥️ Cloudy days can feel slow—try brightening your space.");
+                case RAINY -> System.out.println("   🌧️ Rainy mood? Maybe enjoy something cozy indoors.");
+                case STORMY -> System.out.println("   ⛈️ Stormy weather—stay safe and practice self-care.");
+                case SNOWY -> System.out.println("   ❄️ Cold and snowy—warm drinks and comfort go a long way.");
+            }
         } else {
             System.out.println("☁️ Weather: No data");
         }
@@ -103,6 +127,15 @@ public class MoodAnalyzer {
             ProductivityEntry entry = findEntry(mood, ProductivityEntry.class);
             assert entry != null;
             System.out.println("📈 Productivity: " + entry.getProductivityLevel().getDescription());
+            System.out.println(" \uD83D\uDCDD  What you wrote about your productivity that day : " + entry.getProductivityDescription());
+
+            switch (entry.getProductivityLevel()) {
+                case EXTREMELY_PRODUCTIVE -> System.out.println("   🚀 You crushed it today! Celebrate your wins.");
+                case PRODUCTIVE -> System.out.println("   💪 Solid day! Keep building that momentum.");
+                case NEUTRAL -> System.out.println("   😐 Maybe a small goal tomorrow can spark motivation.");
+                case UNPRODUCTIVE -> System.out.println("   😓 Everyone has off-days. Try a small win tomorrow.");
+                case EXTREMELY_UNPRODUCTIVE -> System.out.println("   😴 Reflect on what slowed you down. Rest is productive too.");
+            }
         } else {
             System.out.println("📈 Productivity: No data");
         }
@@ -110,41 +143,32 @@ public class MoodAnalyzer {
         // Screen time analysis
         if (mood.isHasScreenTimeEntry()) {
             ScreenTimeEntry entry = findEntry(mood, ScreenTimeEntry.class);
+            assert entry != null;
             System.out.println("📱 Screen Time: " + entry.getScreenTimeLevel().getDescription());
+            System.out.println(" \uD83D\uDCDD  What you wrote about your screen time that day : " + entry.getScreenTimeDescription());
+
+            switch (entry.getScreenTimeLevel()) {
+                case NONE -> System.out.println("   👏 Great job staying off screens!");
+                case LOW -> System.out.println("   👍 Balanced screen use is good for mental clarity.");
+                case MODERATE -> System.out.println("   ⚖️ Keep an eye on usage, especially before bed.");
+                case HIGH -> System.out.println("   📉 Consider taking screen breaks during the day.");
+                case EXCESSIVE -> System.out.println("   ⚠️ High screen time can affect mood and sleep. Try unplugging a bit.");
+            }
         } else {
             System.out.println("📱 Screen Time: No data");
         }
     }
 
-    private static void findCorrelations(DailyMood currentMood, DataManager dataManager) {
-        System.out.println("\n🔍 PERSONAL INSIGHTS:");
 
-        // Load historical data
-        List<DailyMood> allMoods = dataManager.loadAllDailyMoods();
-
-        // This would be expanded with actual correlation logic using historical data
-        // For now, providing some placeholder insights
-
-        if (currentMood.isHasExerciseEntry() && currentMood.isHasSleepEntry()) {
-            ExerciseEntry exerciseEntry = findEntry(currentMood, ExerciseEntry.class);
-            SleepEntry sleepEntry = findEntry(currentMood, SleepEntry.class);
-
-            assert exerciseEntry != null;
-            if (exerciseEntry.getExerciseLevel().ordinal() >= ExerciseLevel.MODERATE.ordinal()) {
-                assert sleepEntry != null;
-                if (sleepEntry.getSleepQuality().ordinal() >= 2) {
-                    System.out.println("• Exercise and good sleep appear to positively affect your mood");
-                }
-            }
-        }
-
-        System.out.println("• For more detailed correlations, continue tracking your moods daily");
-    }
 
     private static void provideRecommendations(DailyMood mood) {
-        System.out.println("\n💡 RECOMMENDATIONS:");
+        System.out.println("\n╔══════════════════════════════════════════╗");
+        System.out.println("💡OVERALL MOOD RECOMMENDATIONS:");
+        System.out.println("╚══════════════════════════════════════════╝");
 
         MoodLevel currentMood = mood.getMood();
+        System.out.println("\nYour overall mood is: " + currentMood.getDescription());
+
         int moodOrdinal = currentMood.ordinal();
 
         if (moodOrdinal <= 1) { // TERRIBLE or BAD
@@ -163,7 +187,6 @@ public class MoodAnalyzer {
             System.out.println("• Journal about what went well today to remember later");
         }
     }
-
     @SuppressWarnings("unchecked")
     private static <T extends LogEntry> T findEntry(DailyMood mood, Class<T> type) {
         for (LogEntry entry : mood.getEntries()) {

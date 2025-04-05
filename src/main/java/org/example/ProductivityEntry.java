@@ -25,10 +25,11 @@ public class ProductivityEntry extends LogEntry {
     }
 
     public static ProductivityEntry fromCSV(String csv) {
-        String[] parts = csv.split(";");
+        String[] parts = csv.split(";", 2); // <-- use split limit here too
         ProductivityEntry entry = new ProductivityEntry();
         entry.setProductivityLevel(ProductivityLevel.valueOf(parts[0]));
         entry.setProductivityDescription(parts[1]);
         return entry;
     }
+
 }

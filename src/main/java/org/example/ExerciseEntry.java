@@ -25,7 +25,7 @@ public class ExerciseEntry extends LogEntry {
     }
 
     public static ExerciseEntry fromCSV(String csv) {
-        String[] parts = csv.split(";");
+        String[] parts = csv.split(";", 2);
         ExerciseEntry entry = new ExerciseEntry();
         entry.setExerciseLevel(ExerciseLevel.valueOf(parts[0]));
         entry.setExerciseDescription(parts[1]);

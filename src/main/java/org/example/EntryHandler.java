@@ -10,8 +10,8 @@ public class EntryHandler {
     }
 
     public static void addSleepEntry(Scanner scanner, DailyMood dailyMood) {
-        System.out.print("Enter hours of sleep: ");
-        int hours = scanner.nextInt();
+//        System.out.print("Enter hours of sleep: ");
+//        int hours = scanner.nextInt();
         scanner.nextLine();
 
         System.out.println("Select sleep quality:");
@@ -37,7 +37,7 @@ public class EntryHandler {
         String message = scanner.nextLine();
 
         SleepEntry entry = new SleepEntry();
-        entry.setHours(hours);
+       // entry.setHours(hours);
         entry.setSleepQuality(sleepQuality);
         entry.setSleepMessage(message);
 

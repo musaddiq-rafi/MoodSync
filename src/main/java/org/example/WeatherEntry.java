@@ -25,7 +25,7 @@ public class WeatherEntry extends LogEntry {
     }
 
     public static WeatherEntry fromCSV(String csv) {
-        String[] parts = csv.split(";");
+        String[] parts = csv.split(";",2); // <-- split only into 2 parts
         WeatherEntry entry = new WeatherEntry();
         entry.setWeatherLevel(WeatherLevel.valueOf(parts[0]));
         entry.setWeatherDescription(parts[1]);

@@ -44,6 +44,7 @@ public class DailyMood {
         return hasExerciseEntry;
     }
 
+
     public void setHasExerciseEntry(boolean hasExerciseEntry) {
         this.hasExerciseEntry = hasExerciseEntry;
     }
@@ -87,26 +88,32 @@ public class DailyMood {
         if (entry instanceof SleepEntry && !hasSleepEntry) {
             entries.add(entry);
             hasSleepEntry = true;
+            setHasSleepEntry(true);
             return true;
         } else if (entry instanceof ProductivityEntry && !hasProductivityEntry) {
             entries.add(entry);
             hasProductivityEntry = true;
+            setHasProductivityEntry(true);
             return true;
         } else if (entry instanceof WeatherEntry && !hasWeatherEntry) {
             entries.add(entry);
             hasWeatherEntry = true;
+            setHasWeatherEntry(true);
             return true;
         } else if (entry instanceof ExerciseEntry && !hasExerciseEntry) {
             entries.add(entry);
             hasExerciseEntry = true;
+            setHasExerciseEntry(true);
             return true;
         } else if (entry instanceof FoodEntry && !hasFoodEntry) {
             entries.add(entry);
             hasFoodEntry = true;
+            setHasFoodEntry(true);
             return true;
         } else if (entry instanceof ScreenTimeEntry && !hasScreenTimeEntry) {
             entries.add(entry);
             hasScreenTimeEntry = true;
+            setHasScreenTimeEntry(true);
             return true;
         }
         return false; // Entry type already exists
