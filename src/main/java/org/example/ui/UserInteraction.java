@@ -1,4 +1,8 @@
-package org.example;
+package org.example.ui;
+
+import org.example.service.auth.Authenticator;
+import org.example.service.mood.MoodTracker;
+import org.example.service.repository.DataManager;
 
 import java.util.Scanner;
 

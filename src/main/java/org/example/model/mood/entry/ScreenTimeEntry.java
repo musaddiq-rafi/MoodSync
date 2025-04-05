@@ -1,4 +1,7 @@
-package org.example;
+package org.example.model.mood.entry;
+
+import org.example.model.mood.level.ScreenTimeLevel;
+import org.example.model.mood.LogEntry;
 
 public class ScreenTimeEntry extends LogEntry {
     private ScreenTimeLevel screenTimeLevel;

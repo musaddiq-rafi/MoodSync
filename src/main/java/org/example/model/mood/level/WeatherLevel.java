@@ -1,4 +1,4 @@
-package org.example;
+package org.example.model.mood.level;
 
 public enum WeatherLevel {
     SUNNY("☀️ Sunny - A bright and clear day"),

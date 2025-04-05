@@ -1,4 +1,6 @@
-package org.example;
+package org.example.service.auth;
+
+import org.example.model.user.UserManager;
 
 public class Authenticator {
     private UserManager userManager;

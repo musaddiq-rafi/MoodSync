@@ -1,13 +1,16 @@
-package org.example;
+package org.example.service.mood;
+
+import org.example.service.repository.DataManager;
+import org.example.model.mood.DailyMood;
+import org.example.model.mood.LogEntry;
+import org.example.model.mood.entry.*;
+import org.example.model.mood.level.MoodLevel;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.format.TextStyle;
-import java.util.List;
 import java.util.Locale;
-import java.util.Map;
-import java.util.HashMap;
 
 public class MoodAnalyzer {
 
@@ -106,7 +109,7 @@ public class MoodAnalyzer {
 
         // Weather analysis
         if (mood.isHasWeatherEntry()) {
-            WeatherEntry entry = findEntry(mood, WeatherEntry.class);
+            SleepEntry.WeatherEntry entry = findEntry(mood, SleepEntry.WeatherEntry.class);
             assert entry != null;
             System.out.println("☁️ Weather: " + entry.getWeatherLevel().getDescription());
             System.out.println(" \uD83D\uDCDD  What you wrote about your weather that day : " + entry.getWeatherDescription());

@@ -1,4 +1,4 @@
-package org.example;
+package org.example.model.mood;
 
 import java.time.LocalDate;
 

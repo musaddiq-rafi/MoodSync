@@ -1,4 +1,7 @@
-package org.example;
+package org.example.model.mood.entry;
+
+import org.example.model.mood.level.FoodSatisfactionLevel;
+import org.example.model.mood.LogEntry;
 
 public class FoodEntry extends LogEntry {
     private FoodSatisfactionLevel foodSatisfactionLevel;

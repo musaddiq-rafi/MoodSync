@@ -1,4 +1,4 @@
-package org.example;
+package org.example.model.mood.level;
 
 public enum FoodSatisfactionLevel {
     EXCELLENT("😋 Excellent - You are satisfied with your food"),

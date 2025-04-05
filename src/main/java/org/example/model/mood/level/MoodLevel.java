@@ -1,4 +1,4 @@
-package org.example;
+package org.example.model.mood.level;
 
 public enum MoodLevel {
     EXTREMELY_HAPPY("😁 Extremely Happy - You are on top of the world!"),

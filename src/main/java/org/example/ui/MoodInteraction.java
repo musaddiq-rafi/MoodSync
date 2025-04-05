@@ -1,4 +1,11 @@
-package org.example;
+package org.example.ui;
+
+import org.example.model.mood.DailyMood;
+import org.example.model.mood.level.MoodLevel;
+import org.example.service.mood.MoodAnalyzer;
+import org.example.service.mood.MoodSyncDoctor;
+import org.example.service.mood.MoodTracker;
+import org.example.service.repository.DataManager;
 
 import java.util.List;
 import java.util.Scanner;

@@ -1,4 +1,4 @@
-package org.example;
+package org.example.model.mood.level;
 
 public enum ExerciseLevel {
     NONE("🚫 No Exercise - You haven't exercised today"),

@@ -1,4 +1,7 @@
-package org.example;
+package org.example.model.mood;
+
+import org.example.model.mood.entry.*;
+import org.example.model.mood.level.MoodLevel;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -95,7 +98,7 @@ public class DailyMood {
             hasProductivityEntry = true;
             setHasProductivityEntry(true);
             return true;
-        } else if (entry instanceof WeatherEntry && !hasWeatherEntry) {
+        } else if (entry instanceof SleepEntry.WeatherEntry && !hasWeatherEntry) {
             entries.add(entry);
             hasWeatherEntry = true;
             setHasWeatherEntry(true);

@@ -1,4 +1,10 @@
-package org.example;
+package org.example.service.repository;
+
+import org.example.ui.visualization.CSVTableDisplay;
+import org.example.model.mood.DailyMood;
+import org.example.model.mood.LogEntry;
+import org.example.model.mood.entry.*;
+import org.example.model.mood.level.MoodLevel;
 
 import java.io.*;
 import java.time.LocalDateTime;
@@ -17,8 +23,8 @@ public class DataManager {
                     writer.write("SleepEntry;" + ((SleepEntry) entry).toCSV() + "\n");
                 } else if (entry instanceof ProductivityEntry) {
                     writer.write("ProductivityEntry;" + ((ProductivityEntry) entry).toCSV() + "\n");
-                } else if (entry instanceof WeatherEntry) {
-                    writer.write("WeatherEntry;" + ((WeatherEntry) entry).toCSV() + "\n");
+                } else if (entry instanceof SleepEntry.WeatherEntry) {
+                    writer.write("WeatherEntry;" + ((SleepEntry.WeatherEntry) entry).toCSV() + "\n");
                 } else if (entry instanceof ExerciseEntry) {
                     writer.write("ExerciseEntry;" + ((ExerciseEntry) entry).toCSV() + "\n");
                 } else if (entry instanceof ScreenTimeEntry) {
@@ -73,7 +79,7 @@ public class DataManager {
                         switch (entryType) {
                             case "SleepEntry" -> currentMood.addEntry(SleepEntry.fromCSV(entryCSV));
                             case "ProductivityEntry" -> currentMood.addEntry(ProductivityEntry.fromCSV(entryCSV));
-                            case "WeatherEntry" -> currentMood.addEntry(WeatherEntry.fromCSV(entryCSV));
+                            case "WeatherEntry" -> currentMood.addEntry(SleepEntry.WeatherEntry.fromCSV(entryCSV));
                             case "ExerciseEntry" -> currentMood.addEntry(ExerciseEntry.fromCSV(entryCSV));
                             case "ScreenTimeEntry" -> currentMood.addEntry(ScreenTimeEntry.fromCSV(entryCSV));
                             case "FoodEntry" -> currentMood.addEntry(FoodEntry.fromCSV(entryCSV));
@@ -135,7 +141,7 @@ public class DataManager {
                         switch (entryType) {
                             case "SleepEntry" -> currentMood.addEntry(SleepEntry.fromCSV(entryCSV));
                             case "ProductivityEntry" -> currentMood.addEntry(ProductivityEntry.fromCSV(entryCSV));
-                            case "WeatherEntry" -> currentMood.addEntry(WeatherEntry.fromCSV(entryCSV));
+                            case "WeatherEntry" -> currentMood.addEntry(SleepEntry.WeatherEntry.fromCSV(entryCSV));
                             case "ExerciseEntry" -> currentMood.addEntry(ExerciseEntry.fromCSV(entryCSV));
                             case "ScreenTimeEntry" -> currentMood.addEntry(ScreenTimeEntry.fromCSV(entryCSV));
                             case "FoodEntry" -> currentMood.addEntry(FoodEntry.fromCSV(entryCSV));

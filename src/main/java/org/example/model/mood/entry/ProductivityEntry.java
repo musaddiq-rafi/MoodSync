@@ -1,4 +1,7 @@
-package org.example;
+package org.example.model.mood.entry;
+
+import org.example.model.mood.level.ProductivityLevel;
+import org.example.model.mood.LogEntry;
 
 public class ProductivityEntry extends LogEntry {
     private ProductivityLevel productivityLevel;

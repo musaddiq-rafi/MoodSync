@@ -1,18 +1,40 @@
+package org.example.ui;
 
-package org.example;
+import org.example.model.mood.DailyMood;
+import org.example.model.mood.entry.*;
+import org.example.model.mood.level.*;
 
 import java.util.Scanner;
+
 public class EntryHandler {
+
+    private static final String RESET = "\u001B[0m";
+    private static final String CYAN = "\u001B[36m";
+    private static final String GREEN = "\u001B[32m";
+    private static final String YELLOW = "\u001B[33m";
+    private static final String PURPLE = "\u001B[35m";
+    private static final String BOLD = "\033[1m";
+
     private Scanner scanner;
 
     public EntryHandler(Scanner scanner) {
         this.scanner = scanner;
     }
 
+    private static void printHeader(String sectionTitle) {
+        System.out.println(BOLD + PURPLE +
+                "\n========================================");
+        System.out.println(" MoodSync – Savor the favor of your 'Mental' health ");
+        System.out.println(" " + sectionTitle);
+        System.out.println("========================================" + RESET);
+    }
+
     public static void addSleepEntry(Scanner scanner, DailyMood dailyMood) {
-//        System.out.print("Enter hours of sleep: ");
-//        int hours = scanner.nextInt();
-        scanner.nextLine();
+        printHeader("😴 Sleep Entry – Sleep deeply, feel better!");
+
+        System.out.println(CYAN + "Your sleep directly affects your emotional stability. Be honest! 💤" + RESET);
+
+        scanner.nextLine(); // Clear buffer
 
         System.out.println("Select sleep quality:");
         System.out.println("1. " + SleepQualities.EXCELLENT.getDescription());
@@ -33,22 +55,25 @@ public class EntryHandler {
             default -> SleepQualities.AVERAGE;
         };
 
-        System.out.print("Enter your thoughts on sleep today: ");
+        System.out.print(YELLOW + "Enter your thoughts on sleep today: " + RESET);
         String message = scanner.nextLine();
 
         SleepEntry entry = new SleepEntry();
-       // entry.setHours(hours);
         entry.setSleepQuality(sleepQuality);
         entry.setSleepMessage(message);
 
         if (dailyMood.addEntry(entry)) {
-            System.out.println("Sleep entry added successfully ✓");
+            System.out.println(GREEN + "✓ Sleep entry added successfully!" + RESET);
         } else {
-            System.out.println("Failed to add sleep entry.");
+            System.out.println("❌ Failed to add sleep entry.");
         }
     }
 
     public static void addProductivityEntry(Scanner scanner, DailyMood dailyMood) {
+        printHeader("💼 Productivity Entry – Your wins matter!");
+
+        System.out.println(CYAN + "Being productive boosts confidence and lifts your mood ☀️" + RESET);
+
         System.out.println("Select productivity level:");
         System.out.println("1. " + ProductivityLevel.EXTREMELY_PRODUCTIVE.getDescription());
         System.out.println("2. " + ProductivityLevel.PRODUCTIVE.getDescription());
@@ -68,7 +93,7 @@ public class EntryHandler {
             default -> ProductivityLevel.NEUTRAL;
         };
 
-        System.out.print("Enter productive tasks you completed today: ");
+        System.out.print(YELLOW + "Describe what you accomplished today: " + RESET);
         String description = scanner.nextLine();
 
         ProductivityEntry entry = new ProductivityEntry();
@@ -76,10 +101,14 @@ public class EntryHandler {
         entry.setProductivityDescription(description);
 
         dailyMood.addEntry(entry);
-        System.out.println("Productivity entry added successfully ✓");
+        System.out.println(GREEN + "✓ Productivity entry added!" + RESET);
     }
 
     public static void addWeatherEntry(Scanner scanner, DailyMood dailyMood) {
+        printHeader("⛅ Weather Entry – Nature's effect on mood");
+
+        System.out.println(CYAN + "Weather affects your energy and emotions – track it mindfully 🌦️" + RESET);
+
         System.out.println("Select weather type:");
         System.out.println("1. " + WeatherLevel.SUNNY.getDescription());
         System.out.println("2. " + WeatherLevel.CLOUDY.getDescription());
@@ -99,18 +128,22 @@ public class EntryHandler {
             default -> WeatherLevel.SUNNY;
         };
 
-        System.out.print("Enter weather description: ");
+        System.out.print(YELLOW + "Describe today’s weather: " + RESET);
         String description = scanner.nextLine();
 
-        WeatherEntry entry = new WeatherEntry();
+        SleepEntry.WeatherEntry entry = new SleepEntry.WeatherEntry();
         entry.setWeatherLevel(level);
         entry.setWeatherDescription(description);
 
         dailyMood.addEntry(entry);
-        System.out.println("Weather entry added successfully ✓");
+        System.out.println(GREEN + "✓ Weather entry added!" + RESET);
     }
 
     public static void addExerciseEntry(Scanner scanner, DailyMood dailyMood) {
+        printHeader("🏃 Exercise Entry – Move for a better mood!");
+
+        System.out.println(CYAN + "Movement boosts endorphins. Even a little matters! 💪" + RESET);
+
         System.out.println("Select exercise level:");
         System.out.println("1. " + ExerciseLevel.NONE.getDescription());
         System.out.println("2. " + ExerciseLevel.LIGHT.getDescription());
@@ -130,7 +163,7 @@ public class EntryHandler {
             default -> ExerciseLevel.NONE;
         };
 
-        System.out.print("Enter exercise description: ");
+        System.out.print(YELLOW + "Describe your physical activity today: " + RESET);
         String description = scanner.nextLine();
 
         ExerciseEntry entry = new ExerciseEntry();
@@ -138,10 +171,14 @@ public class EntryHandler {
         entry.setExerciseDescription(description);
 
         dailyMood.addEntry(entry);
-        System.out.println("Exercise entry added successfully ✓");
+        System.out.println(GREEN + "✓ Exercise entry added!" + RESET);
     }
 
     public static void addFoodEntry(Scanner scanner, DailyMood dailyMood) {
+        printHeader("🍱 Food Entry – Nourish to flourish!");
+
+        System.out.println(CYAN + "What you eat can shift your energy and focus. Be mindful 🍓" + RESET);
+
         System.out.println("Select food satisfaction level:");
         System.out.println("1. " + FoodSatisfactionLevel.EXCELLENT.getDescription());
         System.out.println("2. " + FoodSatisfactionLevel.GOOD.getDescription());
@@ -161,7 +198,7 @@ public class EntryHandler {
             default -> FoodSatisfactionLevel.AVERAGE;
         };
 
-        System.out.print("Enter food details: ");
+        System.out.print(YELLOW + "Write what you ate and how it felt: " + RESET);
         String description = scanner.nextLine();
 
         FoodEntry entry = new FoodEntry();
@@ -169,10 +206,14 @@ public class EntryHandler {
         entry.setFoodDescription(description);
 
         dailyMood.addEntry(entry);
-        System.out.println("Food entry added successfully ✓");
+        System.out.println(GREEN + "✓ Food entry added!" + RESET);
     }
 
     public static void addScreenTimeEntry(Scanner scanner, DailyMood dailyMood) {
+        printHeader("📱 Screen Time Entry – Balance is key");
+
+        System.out.println(CYAN + "Too much screen time can drain you. Track it for better balance 📵" + RESET);
+
         System.out.println("Select screen time level:");
         System.out.println("1. " + ScreenTimeLevel.NONE.getDescription());
         System.out.println("2. " + ScreenTimeLevel.LOW.getDescription());
@@ -192,7 +233,7 @@ public class EntryHandler {
             default -> ScreenTimeLevel.NONE;
         };
 
-        System.out.print("Enter screen time details: ");
+        System.out.print(YELLOW + "Describe your screen habits today: " + RESET);
         String description = scanner.nextLine();
 
         ScreenTimeEntry entry = new ScreenTimeEntry();
@@ -200,6 +241,6 @@ public class EntryHandler {
         entry.setScreenTimeDescription(description);
 
         dailyMood.addEntry(entry);
-        System.out.println("Screen time entry added successfully ✓");
+        System.out.println(GREEN + "✓ Screen time entry added!" + RESET);
     }
 }

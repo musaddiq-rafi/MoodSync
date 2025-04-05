@@ -1,4 +1,4 @@
-package org.example;
+package org.example.model.mood.level;
 
 public enum SleepQualities {
     EXCELLENT("😴 Excellent - About 8 hours"),

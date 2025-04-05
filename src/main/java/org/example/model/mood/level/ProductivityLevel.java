@@ -1,4 +1,4 @@
-package org.example;
+package org.example.model.mood.level;
 
 public enum ProductivityLevel {
     EXTREMELY_PRODUCTIVE("🚀 Extremely Productive - You have accomplished a lot!"),
