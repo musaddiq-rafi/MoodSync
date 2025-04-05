@@ -19,6 +19,62 @@ The application follows several clean code practices to ensure maintainability a
 - **Consistent Formatting**: The code is consistently formatted with proper indentation and spacing.
 - **Commenting and Documentation**: Important sections of the code are documented with comments to explain their functionality.
 
+## File and folder structure
+
+The file and folder structure is organized to promote modularity and separation of concerns:
+
+```
+src/main/java/org/example/
+│
+├── model/                     # Domain objects
+│   ├── user/
+│   │   ├── User.java          # User entity (new)
+│   │   └── UserManager.java
+│   │
+│   ├── mood/
+│   │   ├── DailyMood.java     
+│   │   ├── LogEntry.java      # Base class
+│   │   │
+│   │   ├── entry/             # Entry type implementations
+│   │   │   ├── SleepEntry.java
+│   │   │   ├── ProductivityEntry.java
+│   │   │   ├── WeatherEntry.java
+│   │   │   ├── ExerciseEntry.java
+│   │   │   ├── FoodEntry.java
+│   │   │   └── ScreenTimeEntry.java
+│   │   │
+│   │   ├── level/             # Entry level enums
+│   │       ├── MoodLevel.java
+│   │       ├── SleepQualities.java
+│   │       ├── ProductivityLevel.java
+│   │       ├── WeatherLevel.java
+│   │       ├── ExerciseLevel.java
+│   │       ├── FoodSatisfactionLevel.java
+│   │       └── ScreenTimeLevel.java
+│   │
+├── service/                   # Business logic
+│   ├── auth/
+│   │   └── Authenticator.java
+│   │
+│   ├── mood/
+│   │   ├── MoodTracker.java
+│   │   ├── MoodAnalyzer.java
+│   │   └── MoodSyncDoctor.java
+│   │
+├── repository/                # Data access
+│   └── DataManager.java
+│
+├── ui/                        # User interaction
+│   ├── UserInteraction.java
+│   ├── MoodInteraction.java
+│   ├── EntryHandler.java
+│   └── visualization/
+│       └── CSVTableDisplay.java
+│
+└── Main.java                  # Application entry point
+
+```
+
 ## Object-Oriented Programming (OOP) Principles
 The application is designed following fundamental OOP principles:
 
