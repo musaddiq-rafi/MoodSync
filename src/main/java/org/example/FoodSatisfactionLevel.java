@@ -1,11 +1,11 @@
 package org.example;
 
 public enum FoodSatisfactionLevel {
-    EXCELLENT("😋 Excellent"),
-    GOOD("😊 Good"),
-    AVERAGE("😐 Average"),
-    POOR("😞 Poor"),
-    TERRIBLE("🤢 Terrible");
+    EXCELLENT("😋 Excellent - You are satisfied with your food"),
+    GOOD("😊 Good - You enjoyed your meal"),
+    AVERAGE("😐 Average - It was okay"),
+    POOR("😞 Poor - You didn't like it much"),
+    TERRIBLE("🤢 Terrible - You couldn't eat it");
 
     private final String description;
 

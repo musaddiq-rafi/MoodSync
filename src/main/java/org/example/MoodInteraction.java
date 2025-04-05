@@ -35,7 +35,7 @@ public class MoodInteraction {
             System.out.println("5. Add Food Entry");
             System.out.println("6. Add Screen Time Entry");
             System.out.println("7. Analyze Mood");
-            System.out.println("8. Display Graph");
+            System.out.println("8. Talk to MoodSync Doctor");
             System.out.println("9. Show Saved Data");
             System.out.println("10. Show Data in Table");
             System.out.println("11. Exit");
@@ -51,6 +51,7 @@ public class MoodInteraction {
                 case 5 -> EntryHandler.addFoodEntry(scanner, dailyMood);
                 case 6 -> EntryHandler.addScreenTimeEntry(scanner, dailyMood);
                 case 7 -> showMoodAnalyzerMenu(scanner, dataManager);
+                case 8 -> MoodSyncDoctor.startSession(scanner);
                 case 9 -> dataManager.showSavedData();
                 case 10 -> dataManager.displayTable();
                 case 11 -> {

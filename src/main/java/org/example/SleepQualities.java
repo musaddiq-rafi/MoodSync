@@ -1,11 +1,11 @@
 package org.example;
 
 public enum SleepQualities {
-    EXCELLENT("😴 Excellent"),
-    GOOD("😊 Good"),
-    AVERAGE("😐 Average"),
-    POOR("😟 Poor"),
-    TERRIBLE("😫 Terrible");
+    EXCELLENT("😴 Excellent - About 8 hours"),
+    GOOD("😊 Good - About 7 hours"),
+    AVERAGE("😐 Average - About 6 hours"),
+    POOR("😟 Poor - About 5 hours"),
+    TERRIBLE("😫 Terrible - Less than 5 hours");
 
     private final String description;
 

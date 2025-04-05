@@ -5,14 +5,6 @@ public class SleepEntry extends LogEntry {
     private SleepQualities sleepQuality;
     private String sleepMessage;
 
-//    public int getHours() {
-//        return hours;
-//    }
-
-    //public void setHours(int hours) {
-       // this.hours = hours;
-    //}
-
     public SleepQualities getSleepQuality() {
         return sleepQuality;
     }

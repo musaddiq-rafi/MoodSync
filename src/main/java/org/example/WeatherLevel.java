@@ -1,11 +1,11 @@
 package org.example;
 
 public enum WeatherLevel {
-    SUNNY("☀️ Sunny"),
-    CLOUDY("☁️ Cloudy"),
-    RAINY("🌧️ Rainy"),
-    STORMY("⛈️ Stormy"),
-    SNOWY("❄️Cold");
+    SUNNY("☀️ Sunny - A bright and clear day"),
+    CLOUDY("☁️ Cloudy - Overcast skies"),
+    RAINY("🌧️ Rainy - Wet and gloomy"),
+    STORMY("⛈️ Stormy - Thunder and lightning"),
+    SNOWY("❄️Cold - Feeling frozen");
 
     private final String description;
 
