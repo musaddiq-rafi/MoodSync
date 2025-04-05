@@ -6,6 +6,14 @@ import java.io.IOException;
 import java.util.*;
 
 public class CSVTableDisplay {
+    // ANSI escape codes for colors
+    private static final String RESET = "\u001B[0m";
+    private static final String CYAN = "\u001B[36m";
+    private static final String YELLOW = "\u001B[33m";
+    private static final String GREEN = "\u001B[32m";
+    private static final String PURPLE = "\u001B[35m";
+    private static final String RED = "\u001B[31m";
+
     // Inner class to hold data for each day
     private static class DailyMoodData {
         String timestamp;
@@ -43,12 +51,12 @@ public class CSVTableDisplay {
                 }
             }
         } catch (IOException e) {
-            System.out.println("Error reading CSV file: " + e.getMessage());
+            System.out.println(RED + "Error reading CSV file: " + e.getMessage() + RESET);
             return;
         }
 
         if (dailyMoodDataList.isEmpty()) {
-            System.out.println("No data found in CSV file.");
+            System.out.println(RED + "No data found in CSV file." + RESET);
             return;
         }
 
@@ -60,25 +68,20 @@ public class CSVTableDisplay {
     }
 
     private void displayDailyMoodData(DailyMoodData dailyMood) {
-        if (dailyMood.entries.isEmpty()) {
-            System.out.println("No entries for this day.");
-            return;
-        }
 
-        // Calculate column widths
-        int[] columnWidths = {20, 20, 20}; // Type, Feel, Note
+        int[] columnWidths = {20, 20, 20};
         for (String[] entry : dailyMood.entries) {
             for (int i = 0; i < Math.min(entry.length, 3); i++) {
                 columnWidths[i] = Math.max(columnWidths[i], entry[i].length());
             }
         }
 
-        // Print mood header
-        System.out.println("=".repeat(60));
-        System.out.printf(" Mood Log - Date: %s | Mood: %s%n", dailyMood.date, dailyMood.mood);
-        System.out.println("=".repeat(60));
 
-        // Print column headers
+        System.out.println(GREEN + "=".repeat(60) + RESET);
+        System.out.printf(GREEN + " Mood Log - Date: %s | Mood: %s%n" + RESET, dailyMood.date, dailyMood.mood);
+        System.out.println(GREEN + "=".repeat(60) + RESET);
+
+        // Print column headers with color
         String[] headers = {"Type", "Feel", "Note"};
         for (int i = 0; i < headers.length; i++) {
             columnWidths[i] = Math.max(columnWidths[i], headers[i].length());
@@ -86,19 +89,19 @@ public class CSVTableDisplay {
 
         printSeparator(columnWidths);
         for (int i = 0; i < headers.length; i++) {
-            System.out.print("| " + padRight(headers[i], columnWidths[i]) + " ");
+            System.out.print("| " + CYAN + padRight(headers[i], columnWidths[i]) + RESET + " ");
         }
         System.out.println("|");
         printSeparator(columnWidths);
 
-        // Print data rows
+
         for (String[] row : dailyMood.entries) {
             for (int i = 0; i < Math.min(row.length, 3); i++) {
-                System.out.print("| " + padRight(row[i], columnWidths[i]) + " ");
+                System.out.print("| " + YELLOW + padRight(row[i], columnWidths[i]) + RESET + " ");
             }
             // Fill missing columns with empty space
             for (int i = row.length; i < 3; i++) {
-                System.out.print("| " + padRight("", columnWidths[i]) + " ");
+                System.out.print("| " + YELLOW + padRight("", columnWidths[i]) + RESET + " ");
             }
             System.out.println("|");
         }
