@@ -1,6 +1,8 @@
 # MoodSync – Log. Learn. Heal.
 ### Happiness tracker and mental health analyzer
 
+Savour the favour of your **mental** health with **MoodSync**!
+
 
 
 ---
