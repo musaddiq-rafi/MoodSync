@@ -12,7 +12,7 @@ WeatherEntry;SUNNY;i dont like this weather 001
 ExerciseEntry;NONE;idk what i 001
 FoodEntry;EXCELLENT;sausage 001
 ScreenTimeEntry;HIGH;5hr 001
-2025-04-05 02:57:49;2069-69-69;EXTREMELY_HAPPY
+2025-04-05 02:57:49;2009-09-19;EXTREMELY_HAPPY
 SleepEntry;TERRIBLE;test
 ProductivityEntry;EXTREMELY_PRODUCTIVE;3
 WeatherEntry;SUNNY;1
@@ -24,12 +24,11 @@ WeatherEntry;SUNNY;weather was very good
 ExerciseEntry;NONE;no exercise at all
 FoodEntry;EXCELLENT;pasta and i love this !
 ScreenTimeEntry;NONE;good day
-2025-04-05 18:11:44;1;EXTREMELY_HAPPY
-2025-04-05 19:27:47;2025-10-10\;HAPPY
+2025-04-05 19:27:47;2025-10-10;HAPPY
 SleepEntry;GOOD;it was good [lasttest]
 ProductivityEntry;EXTREMELY_PRODUCTIVE;coding and travelling
 WeatherEntry;CLOUDY;it was good i believe
 ExerciseEntry;LIGHT;gym and walking
 FoodEntry;EXCELLENT;it was awesome, savoy icecream cake
 ScreenTimeEntry;LOW;it was little
-2025-04-05 19:30:05;2020-10-10;HAPPY
+
