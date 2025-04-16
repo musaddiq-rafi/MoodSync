@@ -1,30 +1,43 @@
 # MoodSync – Log. Learn. Heal.
 ### Happiness tracker and mental health analyzer
 
+
+
+---
+
 ## Overview
-*MoodSync* is a comprehensive mental health companion application designed to help users track and analyze their daily moods and activities. The application allows users to log various aspects of their daily life, such as sleep quality, productivity, weather, exercise, food satisfaction, and screen time. It provides insights and suggestions based on the logged data to help users improve their mental well-being.
 
-## Features
+**MoodSync** is a comprehensive mental health companion application designed to help you track and analyze your daily mood and activities. Log various aspects of your day—including sleep quality, productivity, weather, exercise, food satisfaction, and screen time—and receive personalized insights and suggestions to enhance your well-being.
 
-•⁠  ⁠*User Authentication*: Secure registration and login system.
-•⁠  ⁠*Mood Tracking*: Log daily moods and various activities.
-•⁠  ⁠*Data Analysis*: Analyze logged data to provide insights and suggestions.
-•⁠  ⁠*Visualization*: Display logged data in a tabular format.
-•⁠  ⁠*MoodSync Doctor*: Provides suggestions and tips for mental health issues.
+---
 
-## Clean Code Practices
-The application follows several clean code practices to ensure maintainability and readability:
-
-•⁠  ⁠*Meaningful Names*: Variables, methods, and classes have descriptive names that convey their purpose.
-•⁠  ⁠*Single Responsibility Principle*: Each class and method has a single responsibility, making the code easier to understand and modify.
-•⁠  ⁠*Consistent Formatting*: The code is consistently formatted with proper indentation and spacing.
-•⁠  ⁠*Commenting and Documentation*: Important sections of the code are documented with comments to explain their functionality.
-
-## File and folder structure
-
-The file and folder structure is organized to promote modularity and separation of concerns:
+## ✨ Features
 
 
+- 📊 **Mood Tracking**: Daily logs of your mood and activities.
+- 📝 **Activity Logging**: Record sleep, productivity, weather, exercise, food satisfaction, and screen time.
+- 📂 **File System**: Data is stored in a structured file system for easy access and management.
+- 🔍 **Data Analysis**: Detailed insights with actionable suggestions.
+- 📈 **Visualization**: Display and explore data in an easy-to-read table.
+- 🩺 **MoodSync Doctor**: Expert suggestions and mental health tips.
+
+
+---
+
+## 💻 Clean Code Practices
+
+To ensure maintainability and readability, the application follows best clean code practices:
+
+- **Meaningful Names**: Variables, methods, and classes are clearly named.
+- **Single Responsibility Principle (SRP)**: Every component does one thing and does it well.
+- **Consistent Formatting**: Uniform code style with proper indentation.
+- **Commenting and Documentation**: Detailed comments explain important sections.
+
+---
+
+## 📂 File and Folder Structure
+
+```plaintext
 src/main/java/org/example/
 │
 ├── model/                     # Domain objects
@@ -73,142 +86,72 @@ src/main/java/org/example/
 │       └── CSVTableDisplay.java
 │
 └── Main.java                  # Application entry point
+```
+
+---
+
+## 🏗️ Object-Oriented Programming (OOP) Principles
+
+The system is designed with OOP fundamentals in mind:
+
+- **Encapsulation**: Data and behavior are contained within classes.
+- **Inheritance**: Common functionality is shared across classes.
+- **Polymorphism**: Different implementations are interchangeable through common interfaces.
+- **Abstraction**: Complex logic is simplified via clear, concise interfaces.
+
+---
+
+## 🔄 Refactoring & SOLID Principles
+
+### Single Responsibility Principle (SRP)
+- **UserManager**: Manages user registration and authentication.
+- **Authenticator**: Executes the authentication logic.
+- **DailyMood**: Handles mood data logging.
+- **MoodAnalyzer**: Evaluates mood data to provide insights.
+- **MoodSyncDoctor**: Delivers expert mental health suggestions.
+- **LogEntry & Subclasses**: Represent various mood-related entries.
+- **DataManager**: Manages data storage and retrieval.
+
+### Open/Closed Principle (OCP)
+- **Extensibility**: New entry types (e.g., SleepEntry, FoodEntry) can be added without modifying existing code.
+- **Scalability**: Enum classes allow for seamless addition of new levels.
+
+### Liskov Substitution Principle (LSP)
+- Subclasses, such as SleepEntry and ExerciseEntry, fulfill their parent class contracts and can be used interchangeably where a LogEntry is expected.
+
+### Interface Segregation Principle (ISP)
+- Each class focuses on its specific functionality, avoiding unnecessary method implementations.
+
+### Dependency Inversion Principle (DIP)
+- High-level modules (e.g., **Authenticator**, **MoodAnalyzer**) depend on abstractions rather than low-level modules.
+
+---
+
+## 🚀 Functionality
+
+- **User Registration and Login**: Secure account setup and authentication.
+- **Daily Mood Logging**: Seamlessly log your mood and day-to-day activities.
+- **Data Analysis**: Receive personalized insights to help you thrive.
+- **Data Visualization**: Explore your data with clear, concise tables.
+- **MoodSync Doctor**: Get tailored suggestions to boost your mental health.
+
+---
+
+## 📚 OOP Fundamentals & Design Patterns
+
+Inspired by the OOP2 course, the application implements:
+
+- **Core OOP Principles**: Encapsulation, Inheritance, Polymorphism, and Abstraction.
+- **Design Patterns**: Utilizes patterns like Singleton and Factory for robust design.
+- **Refactoring Techniques**: Continuous improvement for cleaner, more maintainable code.
+- **Clean Code Practices**: Consistently readable, well-documented, and modular code.
+
+---
+
+## ✅ Conclusion
+
+By adhering to clean code practices and OOP principles, **MoodSync** delivers a robust, maintainable, and scalable solution for tracking and improving your mental health. Its modular design and continuous refactoring ensure that the application is ready for future improvements and features.
+
+---
 
 
-
-## Object-Oriented Programming (OOP) Principles
-The application is designed following fundamental OOP principles:
-
-•⁠  ⁠*Encapsulation*: Data and methods are encapsulated within classes, providing a clear interface and hiding implementation details.
-•⁠  ⁠*Inheritance*: Common functionality is abstracted into base classes, and specific behaviors are implemented in derived classes.
-•⁠  ⁠*Polymorphism*: Interfaces and abstract classes are used to define common behaviors, allowing different implementations to be used interchangeably.
-•⁠  ⁠*Abstraction*: Complex logic is abstracted into simpler interfaces and classes, making the code easier to understand and extend.
-
-## Refactoring
-The codebase has been refactored to improve its structure and readability:
-
-•⁠  ⁠*Modularization*: The code is organized into packages based on functionality, such as auth, mood, repository, and ui.
-•⁠  ⁠*Method Extraction*: Large methods are broken down into smaller, more manageable methods.
-•⁠  ⁠*Code Duplication*: Duplicate code is identified and refactored into reusable methods or classes.
-
-## Functionality
-
-The application provides the following functionality:
-
-•⁠  ⁠*User Registration and Login*: Users can register and log in to the application securely.
-•⁠  ⁠*Daily Mood Logging*: Users can log their daily mood and various activities, such as sleep, productivity, weather, exercise, food, and screen time.
-•⁠  ⁠*Data Analysis*: The application analyzes the logged data and provides insights and suggestions to help users improve their mental well-being.
-•⁠  ⁠*Data Visualization*: Logged data is displayed in a tabular format for easy viewing.
-•⁠  ⁠*MoodSync Doctor*: Provides suggestions and tips for various mental health issues based on user input.
-
-## OOP Fundamentals
-This application follows the fundamental knowledge of Object-Oriented Programming 2 (OOP2) course by:
-
-•⁠  ⁠*Applying OOP Principles*: The application is designed using core OOP principles such as encapsulation, inheritance, polymorphism, and abstraction.
-•⁠  ⁠*Design Patterns*: Common design patterns, such as Singleton and Factory, are used to solve recurring design problems.
-•⁠  ⁠*Refactoring Techniques*: The codebase is continuously refactored to improve its structure, readability, and maintainability.
-•⁠  ⁠*Clean Code Practices*: The code follows clean code practices to ensure it is easy to read, understand, and modify.
-
-## Code Structure Overview
-
-### Main.java
-•⁠  ⁠*Single Responsibility Principle (SRP)*: The Main class is responsible only for starting the application and handling the initial user interaction.
-•⁠  ⁠*Meaningful Names*: The method ⁠ printHeader ⁠ and the variables within it have descriptive names that convey their purpose.
-
-### DailyMood.java
-•⁠  ⁠*Encapsulation*: The class encapsulates the data related to a daily mood entry, providing getter and setter methods to access and modify the data.
-•⁠  ⁠*Single Responsibility Principle (SRP)*: The class is responsible for managing the mood entries for a single day.
-•⁠  ⁠*Consistent Formatting*: The code is consistently formatted with proper indentation and spacing.
-
-### Authenticator.java
-•⁠  ⁠*Single Responsibility Principle (SRP)*: The Authenticator class is responsible for handling user authentication.
-•⁠  ⁠*Encapsulation*: The class encapsulates the authentication logic, providing methods to register and login users.
-
-### UserManager.java
-•⁠  ⁠*Single Responsibility Principle (SRP)*: The UserManager class is responsible for managing user data.
-•⁠  ⁠*Encapsulation*: The class encapsulates the user data and provides methods to register and authenticate users.
-
-### EntryHandler.java
-•⁠  ⁠*Single Responsibility Principle (SRP)*: The EntryHandler class is responsible for handling user input for different types of entries.
-•⁠  ⁠*Meaningful Names*: Methods like ⁠ addSleepEntry ⁠, ⁠ addProductivityEntry ⁠, etc., have descriptive names that convey their purpose.
-•⁠  ⁠*Consistent Formatting*: The code is consistently formatted with proper indentation and spacing.
-
-### DataManager.java
-•⁠  ⁠*Single Responsibility Principle (SRP)*: The DataManager class is responsible for managing the data storage and retrieval.
-•⁠  ⁠*Encapsulation*: The class encapsulates the logic for saving and loading data from a file.
-•⁠  ⁠*Method Extraction*: Large methods are broken down into smaller, more manageable methods, such as ⁠ saveDailyMoodToFile ⁠ and ⁠ loadAllDailyMoods ⁠.
-
-### MoodAnalyzer.java
-•⁠  ⁠*Single Responsibility Principle (SRP)*: The MoodAnalyzer class is responsible for analyzing mood data.
-•⁠  ⁠*Meaningful Names*: Methods like ⁠ analyzeEntries ⁠ have descriptive names that convey their purpose.
-•⁠  ⁠*Consistent Formatting*: The code is consistently formatted with proper indentation and spacing.
-
-### CSVTableDisplay.java
-•⁠  ⁠*Single Responsibility Principle (SRP)*: The CSVTableDisplay class is responsible for displaying data in a tabular format.
-•⁠  ⁠*Encapsulation*: The class encapsulates the logic for reading and displaying CSV data.
-•⁠  ⁠*Method Extraction*: Large methods are broken down into smaller, more manageable methods, such as ⁠ displayTable ⁠ and ⁠ displayDailyMoodData ⁠.
-
-### MoodSyncDoctor.java
-•⁠  ⁠*Single Responsibility Principle (SRP)*: The MoodSyncDoctor class is responsible for providing suggestions based on user input.
-•⁠  ⁠*Meaningful Names*: Methods like ⁠ startSession ⁠ and ⁠ provideSuggestions ⁠ have descriptive names that convey their purpose.
-•⁠  ⁠*Consistent Formatting*: The code is consistently formatted with proper indentation and spacing.
-
-### LogEntry.java
-•⁠  ⁠*Encapsulation*: The class encapsulates the common properties of all log entries, providing getter and setter methods to access and modify the data.
-•⁠  ⁠*Inheritance*: The class serves as a base class for other specific entry types like ⁠ SleepEntry ⁠, ⁠ ProductivityEntry ⁠, etc.
-
-### Entry Types (SleepEntry.java, ProductivityEntry.java, ScreenTimeEntry.java, etc.)
-•⁠  ⁠*Inheritance*: These classes inherit from ⁠ LogEntry ⁠ and add specific properties related to their respective entry types.
-•⁠  ⁠*Encapsulation*: The classes encapsulate the data related to each specific entry type, providing getter and setter methods to access and modify the data.
-
-### MoodLevel, ExerciseLevel, FoodSatisfactionLevel, etc. (Enums)
-•⁠  ⁠*Encapsulation*: Each enum encapsulates the different levels and their descriptions.
-•⁠  ⁠*Meaningful Names*: The enum constants and their methods have descriptive names that convey their purpose.
-
-## Conclusion
-By adhering to clean code practices and OOP principles, *MoodSync* provides a robust, maintainable, and scalable solution for tracking and improving mental health. The application's modular design and continuous refactoring ensure that it is adaptable to future improvements and features.
-
-
-
-
-
-
-1.⁠ ⁠Single Responsibility Principle (SRP)
-Each class in the application has a single responsibility:
-
-
-UserManager: Manages user registration and authentication.
-Authenticator: Handles user authentication logic.
-DailyMood: Manages mood data for a single day.
-MoodAnalyzer: Analyzes mood data and provides insights.
-MoodSyncDoctor: Provides mental health suggestions.
-LogEntry and its subclasses (e.g., SleepEntry, ExerciseEntry): Represent specific types of mood-related entries.
-DataManager: Handles data storage and retrieval.
-
-
-2.⁠ ⁠Open/Closed Principle (OCP)
-The application is open for extension but closed for modification:
-
-
-New entry types (e.g., SleepEntry, FoodEntry) can be added by extending LogEntry without modifying existing code.
-Enum classes like MoodLevel, ExerciseLevel, and FoodSatisfactionLevel allow adding new levels without altering existing functionality.
-
-3.⁠ ⁠Liskov Substitution Principle (LSP)
-Subclasses can replace their parent classes without breaking the application:
-
-
-LogEntry is the base class for all specific entry types (e.g., SleepEntry, ExerciseEntry), and these subclasses can be used wherever LogEntry is expected.
-Polymorphism is used effectively in methods like analyzeEntries in MoodAnalyzer.
-
-4.⁠ ⁠Interface Segregation Principle (ISP)
-Although explicit interfaces are not used, the application avoids forcing classes to implement unnecessary methods:
-
-
-Each class focuses on its specific functionality, and there are no large, monolithic interfaces or classes.
-5.⁠ ⁠Dependency Inversion Principle (DIP)
-High-level modules do not depend on low-level modules; both depend on abstractions:
-
-
-Authenticator depends on the abstraction provided by UserManager for user-related operations.
-MoodAnalyzer and MoodSyncDoctor depend on DailyMood and its abstractions for mood data.
-The application demonstrates a strong adherence to SOLID principles, ensuring maintainability, scalability, and clean code practices.
